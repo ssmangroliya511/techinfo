@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "870158300642",
+    "project_id": "tech-info-bdd56",
+    "storage_bucket": "tech-info-bdd56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870158300642:android:edfa8be02530c2051eb5bb",
+        "android_client_info": {
+          "package_name": "com.bitinfo.techinfo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVSgUUTSzHsE7it6-hgUpfOUBH7Pe_I4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
