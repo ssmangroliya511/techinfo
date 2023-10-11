@@ -23,7 +23,7 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
 
       appBar : Widget_Appbar(),
 
-      body:ScrollConfiguration(behavior: ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
+      body:ScrollConfiguration(behavior: ScrollBehavior(),
         child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

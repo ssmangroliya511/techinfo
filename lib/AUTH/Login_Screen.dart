@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, deprecated_member_use, non_constant_identifier_names, unnecessary_string_interpolations, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, unrelated_type_equality_checks, unnecessary_brace_in_string_interps
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:linkedin_clone/SCREENS/Home_Screen.dart';
+import 'package:lottie/lottie.dart';
 import 'package:overlay_loader_with_app_icon/overlay_loader_with_app_icon.dart';
 import 'package:pinput/pinput.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -61,10 +62,9 @@ class _Login_ScreenState extends State<Login_Screen> {
           backgroundColor: Colors.blue.shade600,
           body: Center(
             child: ScrollConfiguration(
-              behavior: ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
-              child: Column(
+              behavior: ScrollBehavior(),
+              child: ListView(
                 children: [
-
                   Padding(
                     padding: EdgeInsets.only(top:130,left:20),
                     child: InkWell(
@@ -211,15 +211,16 @@ class _Login_ScreenState extends State<Login_Screen> {
             ),
           )
         )
-        /// FOR WEB .........
+
+        /// ============ FOR WEB ======================================= ///
             : Scaffold(
-            backgroundColor: Colors.white,
-            body: ResponsiveBuilder(
+             backgroundColor: Colors.blueGrey.shade50,
+             body: ResponsiveBuilder(
               builder: (BuildContext context, SizingInformation sizingInformation) {
                 if(sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
                   return Center(
                     child: ScrollConfiguration(
-                      behavior: ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
+                      behavior: ScrollBehavior(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -230,176 +231,221 @@ class _Login_ScreenState extends State<Login_Screen> {
                                 flex:4,child: Image.asset('assets/myimgs/Login Page Img.jpg',
                                     fit:BoxFit.cover,height:Get.height)
                               ),
-                              Container(
-                                height:Get.height,width:Get.width/3+40,
-                                color:Colors.blueGrey.shade50,
-                                padding:EdgeInsets.symmetric(vertical:130,horizontal:80),
+                             Container(
+                               height:Get.height,width:Get.width/3+40,
+                               color:Colors.blueGrey.shade50,
+                               padding:EdgeInsets.symmetric(vertical:130,horizontal:80),
 
-                                child:Card(
-                                  elevation:6,color:Colors.blueGrey,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:BorderRadius.circular(20)
-                                  ),
-                                  child: Container(
-                                    padding:EdgeInsets.only(left:20,right:20),
-                                    decoration:BoxDecoration( color:Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      children: [
+                               child:Card(
+                                 elevation:7,color:Colors.blueGrey,
+                                 shape: RoundedRectangleBorder(
+                                     borderRadius:BorderRadius.circular(20)
+                                 ),
+                                 child: Container(
+                                   padding:EdgeInsets.only(left:20,right:20),
+                                   decoration:BoxDecoration( color:Colors.white,
+                                     borderRadius: BorderRadius.circular(20),
+                                     // border: Border.all(color:Colors.blueGrey.shade700)
+                                   ),
+                                   child: Column(
+                                     children: [
 
-                                        Image.asset('assets/myimgs/Trading app logo.png',fit:BoxFit.contain,width:130),
-                                        SizedBox(height:10),
+                                       Image.asset('assets/myimgs/Trading app logo.png',fit:BoxFit.contain,width:130),
+                                       SizedBox(height:10),
 
-                                        Text("USER LOGIN",style:GoogleFonts.roboto(
-                                            fontSize:20,color:Colors.blueAccent.shade700,
-                                            letterSpacing:0.5,fontWeight:FontWeight.w500
-                                        )),
-                                        SizedBox(height:50),
+                                       InkWell(
+                                         onTap:() {
+                                           Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                                             return Home_Screen();
+                                           },));
+                                         },
+                                         child: Text("USER LOGIN",style:GoogleFonts.roboto(
+                                             fontSize:20,color:Colors.blueAccent.shade700,
+                                             letterSpacing:0.5,fontWeight:FontWeight.w500
+                                         )),
+                                       ),
+                                       SizedBox(height:50),
 
-                                        TextField(
-                                          onChanged: (value) { setState(() {}); },
-                                          controller: Fieldcontroller.lmobile,
-                                          cursorColor:Colors.black,
-                                          style:GoogleFonts.roboto(fontSize:14),
-                                          textInputAction:TextInputAction.done,
-                                          keyboardType: TextInputType.phone,
-                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                          maxLength:10,
-                                          readOnly:isReadOnly ? true : false,
-                                          decoration:InputDecoration(
-                                              isDense: true,filled:true,
-                                              fillColor:Colors.blueGrey.shade50,
-                                              hintText:'Enter Mobile No.',counterText:'',
-                                              constraints: BoxConstraints( maxHeight:45 ),
-                                              hintStyle:GoogleFonts.roboto(fontSize:13,color:Colors.black45),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:BorderRadius.circular(5),
-                                                borderSide: BorderSide(color:Colors.blueGrey,)
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderRadius:BorderRadius.circular(5),
-                                                  borderSide: BorderSide(color:Colors.white)
-                                              ),
-                                              prefixIcon:Icon(Icons.call,color:Colors.blue),
-                                              suffixIcon:Fieldcontroller.lmobile.text.isNotEmpty ? IconButton(onPressed: (){
-                                                setState(() {
-                                                  Fieldcontroller.lmobile.text = '';
-                                                });
-                                              }, icon: Icon(CupertinoIcons.clear,size:15,color:Colors.blue)
-                                              ) : null
-                                          ),
-                                        ),
-                                        SizedBox(height:30),
+                                       TextField(
+                                         onChanged: (value) { setState(() {}); },
+                                         controller: Fieldcontroller.lmobile,
+                                         cursorColor:Colors.black,
+                                         style:GoogleFonts.roboto(fontSize:14),
+                                         textInputAction:TextInputAction.done,
+                                         keyboardType: TextInputType.phone,
+                                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                         maxLength:10,
+                                         readOnly:isReadOnly ? true : false,
+                                         decoration:InputDecoration(
+                                             isDense: true,filled:true,
+                                             fillColor:Colors.blueGrey.shade50,
+                                             hintText:'Enter Mobile No.',counterText:'',
+                                             constraints: BoxConstraints( maxHeight:45 ),
+                                             hintStyle:GoogleFonts.roboto(fontSize:13,color:Colors.black45),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius:BorderRadius.circular(5),
+                                                 borderSide: BorderSide(color:Colors.blueGrey,)
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                                 borderRadius:BorderRadius.circular(5),
+                                                 borderSide: BorderSide(color:Colors.blueAccent.shade700)
+                                             ),
+                                             prefixIcon:Icon(Icons.call,color:Colors.blue),
+                                             suffixIcon:Fieldcontroller.lmobile.text.isNotEmpty ? IconButton(onPressed: (){
+                                               setState(() {
+                                                 Fieldcontroller.lmobile.text = '';
+                                               });
+                                             }, icon: Icon(CupertinoIcons.delete,size:15,color:Colors.red)
+                                             ) : null
+                                         ),
+                                       ),
+                                       SizedBox(height:30),
 
-                                        /// GENERATE OTP BUTTON ..............................
-                                        MaterialButton(
-                                            elevation:0,splashColor:Colors.black26,
-                                            shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
-                                            height:43,minWidth:Get.width/8,
-                                            color:Colors.blue,
-                                            onPressed: () async {
-                                              if(Fieldcontroller.lmobile.text.isEmpty)
-                                                {
-                                                  Fluttertoast.showToast(msg:'Pls enter mobile number',
-                                                      backgroundColor:Colors.red,textColor:Colors.white
-                                                  );
-                                                } else if(Fieldcontroller.lmobile.text.length != 10){
-                                                Fluttertoast.showToast(msg:'Invalid mobile number',
-                                                    backgroundColor:Colors.red,textColor:Colors.white
-                                                );
-                                                } else{
-                                                    setState(() {
-                                                      Var.isloading = true; isReadOnly = true;
-                                                    });
-                                                    Widget_OnPressed_GenerateBtn();
-                                              }
-                                            },
-                                            child: Text('Generate OTP',style:GoogleFonts.roboto(
-                                                color:Colors.white,fontSize:13)),
-                                        ),
-                                        SizedBox(height:55),
+                                       /// GENERATE OTP BUTTON ..............................
+                                       MaterialButton(
+                                         elevation:0,splashColor:Colors.black26,
+                                         shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+                                         height:43,minWidth:Get.width/8,
+                                         color:Colors.blueAccent.shade700,
+                                         onPressed: () async {
 
-                                        /// PINPUT TEXTFIELD ............................
-                                        SizedBox(
-                                          height:50,width:Get.width/2+110,
-                                          child: Pinput(
-                                            defaultPinTheme: PinTheme(
-                                                decoration:BoxDecoration(color:Colors.grey.shade300,
-                                                    borderRadius:BorderRadius.circular(5),
-                                                    border: Border.all(color:Colors.blueGrey)
-                                                )
-                                            ),
-                                            closeKeyboardWhenCompleted:true,
-                                            onChanged: (value) { otp = value; },
-                                            length:6,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                            keyboardType:TextInputType.number,
-                                          ),
-                                        ),
-                                        SizedBox(height:30),
+                                           if(Fieldcontroller.lmobile.text.isEmpty)
+                                           {
+                                             Fluttertoast.showToast(msg:'Pls enter mobile number',
+                                                 backgroundColor:Colors.red,textColor:Colors.white,
+                                                 gravity: ToastGravity.CENTER
+                                             );
+                                           } else if(Fieldcontroller.lmobile.text.length != 10){
+                                             Fluttertoast.showToast(msg:'Invalid mobile number',
+                                                 backgroundColor:Colors.red,textColor:Colors.white
+                                             );
+                                           } else{
+                                             setState(() {
+                                               Var.isloading = true; isReadOnly = true;
+                                             });
+                                             Widget_OnPressed_GenerateBtn();
+                                           }
+                                         },
+                                         child: Text('Generate OTP',style:GoogleFonts.roboto(
+                                             color:Colors.white,fontSize:13)),
+                                       ),
+                                       SizedBox(height:55),
+
+                                       /// PINPUT TEXTFIELD ............................
+                                       SizedBox(
+                                         height:50,width:Get.width/2+110,
+                                         child: Pinput(
+                                           defaultPinTheme: PinTheme(
+                                               decoration:BoxDecoration(color:Colors.grey.shade300,
+                                                   borderRadius:BorderRadius.circular(5),
+                                                   border: Border.all(color:Colors.blueGrey)
+                                               )
+                                           ),
+                                           closeKeyboardWhenCompleted:true,
+                                           onChanged: (value) { otp = value; },
+                                           length:6,
+                                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                           keyboardType:TextInputType.number,
+                                         ),
+                                       ),
+                                       SizedBox(height:30),
 
 
-                                        /// VERIFY OTP BUTTON ........................
-                                        MaterialButton(
-                                            elevation:0,splashColor:Colors.black26,
-                                            shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
-                                            height:43,minWidth:Get.width,
-                                            color:Colors.green,
-                                            onPressed: () async {
-                                              setState(() {
-                                                Var.isloading = true;
-                                              });
-                                              try{
-                                                setState(() {
-                                                  Var.isloading = false;
-                                                });
-                                                await FirebaseAuth.instance
-                                                    .signInWithCredential(PhoneAuthProvider.credential(
-                                                    verificationId: verificationId, smsCode: otp))
-                                                    .then((value) async {
-                                                  if(value.user != null){
-                                                    showDialog(
-                                                      barrierDismissible:false,
-                                                      context: context, builder: (context) {
-                                                      return Dialogs.LoginSuccessful_Dialog();
-                                                    },);
+                                       /// VERIFY OTP BUTTON ........................
+                                       MaterialButton(
+                                           elevation:0,splashColor:Colors.black26,
+                                           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+                                           height:43,minWidth:Get.width,
+                                           color:Colors.green.shade700,
+                                           onPressed: () async {
+                                             setState(() {
+                                               Var.isloading = true;
+                                             });
+                                             try{
+                                               setState(() {
+                                                 Var.isloading = false;
+                                               });
+                                               await FirebaseAuth.instance
+                                                   .signInWithCredential(PhoneAuthProvider.credential(
+                                                   verificationId: verificationId, smsCode: otp)).then((value) async {
+                                                 if(value.user != null){
+                                                   /// WEB LOGIN SUCCESS DIALOG....................................
+                                                   showDialog(
+                                                     barrierDismissible:false,
+                                                     context: context, builder: (context) {
+                                                     return  Container(
+                                                       margin:EdgeInsets.symmetric(vertical:290,horizontal:550),
+                                                       decoration:BoxDecoration(
+                                                           color:Colors.white,borderRadius:BorderRadius.circular(10)
+                                                       ),
+                                                       child:Column(
+                                                         children: [
+                                                           Container(
+                                                             height:Get.height/6-27,width:Get.width,
+                                                             margin: EdgeInsets.only(bottom:15),
+                                                             decoration:BoxDecoration( color:Colors.white,
+                                                                 borderRadius:BorderRadius.vertical(top:Radius.circular(20))
+                                                             ),
+                                                             child:ClipRRect(
+                                                                 child: Lottie.asset('assets/mylottie/Lottie Succes Dialog animation img.json')
+                                                             ),
+                                                           ),
+                                                           Row(
+                                                             mainAxisAlignment: MainAxisAlignment.center,
+                                                             children: [
+                                                               Text('User Verified \t',style:GoogleFonts.roboto(
+                                                                   fontSize:17.5,color:Colors.lightBlue,fontWeight:FontWeight.normal,
+                                                                   decoration:TextDecoration.none)
+                                                               ),
+                                                               Icon(Icons.verified,color:Colors.lightBlue,size:20)
+                                                             ],
+                                                           ),
+                                                           SizedBox(height:10),
+                                                           Text('Login Completed Successfully !!',style:GoogleFonts.ptSans(
+                                                               fontSize:15.5,color:Colors.black,fontWeight:FontWeight.normal,
+                                                               decoration:TextDecoration.none)
+                                                           )
+                                                         ],
+                                                       ),
+                                                     );
+                                                   },
+                                                   );
 
-                                                    SharedPreferences pref = await SharedPreferences.getInstance();
-                                                    pref.setString('userMobile',Fieldcontroller.lmobile.text);
+                                                   SharedPreferences pref = await SharedPreferences.getInstance();
+                                                   pref.setString('userMobile',Fieldcontroller.lmobile.text);
 
-                                                    Future.delayed(Duration(seconds:4),() {
-                                                      return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
-                                                        return BottomHome_Screen();
-                                                      }));
-                                                    },);
-                                                  }
-                                                });
-                                              } catch(e){
-                                                setState(() {
-                                                  Var.isloading = false;
-                                                });
-                                                Get.snackbar( '','',
-                                                    titleText: Text('Verification failed',
-                                                        style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
-                                                    messageText:Text('Invalid OTP !!',
-                                                        style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
-                                                    icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
-                                                    backgroundColor: Colors.white,boxShadows: [BoxShadow(
-                                                      color:Colors.black,blurRadius:8,spreadRadius:-4,
-                                                    )]
-                                                );
-                                              }
-                                            },
-                                            child: Text('Verify OTP & Sign In',style:GoogleFonts.roboto(
-                                                color:Colors.white,fontSize:13)
-                                            )
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                                   Future.delayed(Duration(seconds:3),() {
+                                                     return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                                                       return BottomHome_Screen();
+                                                     }));
+                                                   },);
+                                                 }
+                                               });
+                                             } catch(e){
+                                               setState(() {
+                                                 Var.isloading = false;
+                                               });
+                                               Get.snackbar( '','',
+                                                   titleText: Text('Verification failed',
+                                                       style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
+                                                   messageText:Text('Invalid OTP !!',
+                                                       style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
+                                                   icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
+                                                   backgroundColor: Colors.white,boxShadows: [BoxShadow(
+                                                     color:Colors.black,blurRadius:8,spreadRadius:-4,
+                                                   )]
+                                               );
+                                             }
+                                           },
+                                           child: Text('Verify OTP & Sign In',style:GoogleFonts.roboto(
+                                               color:Colors.white,fontSize:13)
+                                           )
+                                       )
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                             )
                             ],
                           )
                         ],
@@ -442,9 +488,6 @@ class _Login_ScreenState extends State<Login_Screen> {
           Var.isloading = false;
           isReadOnly = true;
         });
-        Future.delayed(Duration(seconds:3),() {
-          exit(0);
-        },);
       },
       codeSent: (verId, forceResendingToken) {
         verificationId = verId;

@@ -28,7 +28,7 @@ class _Notification_ScreenState extends State<Notification_Screen> {
       drawer: Drawerr(),
 
       body:ScrollConfiguration(
-        behavior: ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
+        behavior: ScrollBehavior(),
         child: ListView.builder(
           padding:EdgeInsets.all(10),
           itemBuilder: (BuildContext context, int index) {

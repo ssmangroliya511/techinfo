@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables, deprecated_member_use
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       drawer: Drawerr(),
       body: ScrollConfiguration(
         behavior: ScrollBehavior(
-          androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
+
         ),
         child: ListView.builder(
           itemCount: 5,

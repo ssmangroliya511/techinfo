@@ -10,12 +10,18 @@ import 'AUTH/Login_Screen.dart';
 import 'STATIC CLS/Static_class.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp( options: const FirebaseOptions(
-    apiKey: "AIzaSyD1C8QaEAxv9QJIm2DDF9N3_b3UZv5o",
-    appId: "1:270790104828:web:1da6b11a4729a7d79729",
-    messagingSenderId: "2707901048",
-    projectId: "todo-app-firebase-ce8", ), );
+
+  await Firebase.initializeApp(
+    /// FOR WEB UNCOMMIT THIS CODE ..............
+    options: FirebaseOptions(
+     apiKey: "AIzaSyDVSgUUTSzHsE7it6-hgUpfOUBH7Pe_I4g",
+     appId: "1:870158300642:android:edfa8be02530c2051eb5bb",
+     messagingSenderId: "870158300642",
+     projectId: "tech-info-bdd56",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -44,17 +50,17 @@ class Splash_Screen extends StatelessWidget {
           SizedBox(height:20),
           Expanded(
               child: Container(
-                  height:50,width:70,
+                  height:50,width:70,alignment: Alignment.center,
                   decoration:BoxDecoration(
                       color:Colors.white, borderRadius:BorderRadius.circular(10)
                   ),
-                  alignment: Alignment.center,
-                  child: Text('Ti',style:GoogleFonts.pacifico(fontSize:35,color:Colors.blueAccent),))
+                  child: Text('Ti',style:GoogleFonts.pacifico(
+                      fontSize:35,color:Colors.blueAccent)))
           ),
           SizedBox(height:10),
-          Expanded( child: Text("Tech Info",
-                    style:GoogleFonts.ptSansCaption(fontSize:15,fontWeight:FontWeight.w600,color:Colors.white)
-                   )
+          Expanded(child: Text("Tech Info",
+              style:GoogleFonts.ptSansCaption(fontSize:15,
+                  fontWeight:FontWeight.w600,color:Colors.white))
           ),
         ]),
         nextScreen: Var.UserMobile == null || Var.UserMobile == '' ? Login_Screen() : BottomHome_Screen()

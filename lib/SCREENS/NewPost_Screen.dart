@@ -65,7 +65,7 @@ class _NewPost_ScreenState extends State<NewPost_Screen> {
 
       body: ScrollConfiguration(
         behavior: ScrollBehavior(
-            androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
+
         ),
         child: ListView(
           padding: EdgeInsets.only(top: 10, bottom: 60, left: 10, right: 10),

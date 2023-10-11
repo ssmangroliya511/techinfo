@@ -41,7 +41,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
 
       body: ScrollConfiguration(
         behavior: ScrollBehavior(
-            androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
+
         ),
         child: ListView(
           children: [
