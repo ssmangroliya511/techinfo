@@ -1,4 +1,4 @@
-# techinfo
+# Tech Info
 
 A new Flutter project.
 

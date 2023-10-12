@@ -58,164 +58,166 @@ class _Login_ScreenState extends State<Login_Screen> {
         circularProgressColor: Colors.blueAccent,
         appIcon: Icon(Bootstrap.send,size:18,color:Colors.black),
 
-        child: !kIsWeb ? Scaffold(
-          backgroundColor: Colors.blue.shade600,
-          body: Center(
-            child: ScrollConfiguration(
-              behavior: ScrollBehavior(),
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top:130,left:20),
-                    child: InkWell(
-                        splashColor:Colors.transparent,highlightColor:Colors.transparent,
-                        onLongPress:() {
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
-                            return BottomHome_Screen();
-                          },));
-                          setState(() {});
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('W',style:GoogleFonts.ptSerifCaption(color:Colors.black,fontSize:35)),
-                            Text('elcome',style:GoogleFonts.poppins(color:Colors.white,fontSize:28))
-                          ],
-                        )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom:80,left:40),
-                    child: Align( alignment:Alignment.center,
-                      child: Text('To Your Account . . . ',
-                        style:GoogleFonts.poppins(color:Colors.white70,fontSize:14)),
+        /// ================================= FOR MOBILE SCREEN =============================== ///
+        child: !kIsWeb ?
+        Scaffold(
+            backgroundColor: Colors.blue.shade600,
+            body: Center(
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top:130,left:7),
+                      child: InkWell(
+                          splashColor:Colors.transparent,highlightColor:Colors.transparent,
+                          onLongPress:() {
+                            Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                              return BottomHome_Screen();
+                            },));
+                            setState(() {});
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('W',style:GoogleFonts.ptSerifCaption(color:Colors.black,fontSize:35)),
+                              Text('elcome',style:GoogleFonts.poppins(color:Colors.white,fontSize:28))
+                            ],
+                          )),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom:80,left:30),
+                      child: Align( alignment:Alignment.center,
+                        child: Text('To Your Account . . . ',
+                            style:GoogleFonts.poppins(color:Colors.white70,fontSize:14)),
+                      ),
+                    ),
 
-                 Container(
-                    height:Get.height/2+20,
-                    margin:EdgeInsets.only(top:30,left:15,right:15),
-                    padding:EdgeInsets.all(10),
-                    decoration:BoxDecoration(
+                    Container(
+                      height:Get.height/2+20,
+                      margin:EdgeInsets.only(top:30,left:15,right:15),
+                      padding:EdgeInsets.all(10),
+                      decoration:BoxDecoration(
                         color:Colors.white,borderRadius:BorderRadius.circular(15),
-                    ),
-                    child:Column(
-                      children: [
-                        SizedBox(height:10),
+                      ),
+                      child:Column(
+                        children: [
+                          SizedBox(height:10),
 
-                        Text("USER LOGIN",style:GoogleFonts.roboto(
-                          fontSize:20,color:Colors.blue,letterSpacing:0.5,fontWeight:FontWeight.w500
-                        )),
-                        SizedBox(height:50),
+                          Text("USER LOGIN",style:GoogleFonts.roboto(
+                              fontSize:20,color:Colors.blue,letterSpacing:0.5,fontWeight:FontWeight.w500
+                          )),
+                          SizedBox(height:50),
 
-                        Widget_Mobile_TextField(),
-                        SizedBox(height:30),
+                          Widget_Mobile_TextField(),
+                          SizedBox(height:30),
 
-                        /// GENERATE OTP BUTTON ..............................
-                        Fieldcontroller.lmobile.text.length == 10 || isShowGenerateBtn ?
-                        MaterialButton(
-                            elevation:0,splashColor:Colors.black26,
-                            shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
-                            height:38,minWidth:Get.width/2+10,
-                            color:Colors.blue,
-                            onPressed: () async {
-                              setState(() {
-                                Var.isloading = true; isReadOnly = true;
-                              });
-                              Widget_OnPressed_GenerateBtn();
-                            },
-                            child: Text('Generate OTP',style:GoogleFonts.roboto(
-                                color:Colors.white,fontSize:14))
-                        ) :
-                        Widget_DisableGenerate_Button(),
-                        SizedBox(height:45),
+                          /// GENERATE OTP BUTTON ..............................
+                          Fieldcontroller.lmobile.text.length == 10 || isShowGenerateBtn ?
+                          MaterialButton(
+                              elevation:0,splashColor:Colors.black26,
+                              shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+                              height:38,minWidth:Get.width/2+10,
+                              color:Colors.blue,
+                              onPressed: () async {
+                                setState(() {
+                                  Var.isloading = true; isReadOnly = true;
+                                });
+                                Widget_OnPressed_GenerateBtn();
+                              },
+                              child: Text('Generate OTP',style:GoogleFonts.roboto(
+                                  color:Colors.white,fontSize:14))
+                          ) :
+                          Widget_DisableGenerate_Button(),
+                          SizedBox(height:45),
 
-                        /// PINPUT TEXTFIELD ............................
-                        SizedBox(
-                          height:50,width:Get.width/2+110,
-                          child: Pinput(
-                            defaultPinTheme: PinTheme(
-                                decoration:BoxDecoration(color:Colors.grey.shade300,
-                                  borderRadius:BorderRadius.circular(7)
-                                )
+                          /// PINPUT TEXTFIELD ............................
+                          SizedBox(
+                            height:50,width:Get.width/2+110,
+                            child: Pinput(
+                              defaultPinTheme: PinTheme(
+                                  decoration:BoxDecoration(color:Colors.grey.shade300,
+                                      borderRadius:BorderRadius.circular(7)
+                                  )
+                              ),
+                              closeKeyboardWhenCompleted:true,
+                              onChanged: (value) { otp = value; },
+                              length:6,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              keyboardType:TextInputType.number,
                             ),
-                            closeKeyboardWhenCompleted:true,
-                            onChanged: (value) { otp = value; },
-                            length:6,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            keyboardType:TextInputType.number,
                           ),
-                        ),
-                        SizedBox(height:30),
+                          SizedBox(height:30),
 
 
-                        /// VERIFY OTP BUTTON ........................
-                        isShowPinput ? MaterialButton(
-                            elevation:0,splashColor:Colors.black26,
-                            shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            height:38,minWidth:Get.width/2+10,color:Colors.green,
-                            onPressed: () async {
-                              setState(() {
-                                Var.isloading = true;
-                              });
-                              try{
+                          /// VERIFY OTP BUTTON ........................
+                          isShowPinput ? MaterialButton(
+                              elevation:0,splashColor:Colors.black26,
+                              shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              height:38,minWidth:Get.width/2+10,color:Colors.green,
+                              onPressed: () async {
                                 setState(() {
-                                  Var.isloading = false;
+                                  Var.isloading = true;
                                 });
-                                await FirebaseAuth.instance
-                                    .signInWithCredential(PhoneAuthProvider.credential(
-                                     verificationId: verificationId, smsCode: otp))
-                                    .then((value) async {
-                                     if(value.user != null){
-                                       showDialog(
-                                         barrierDismissible:false,
-                                         context: context, builder: (context) {
-                                         return Dialogs.LoginSuccessful_Dialog();
-                                       },);
+                                try{
+                                  setState(() {
+                                    Var.isloading = false;
+                                  });
+                                  await FirebaseAuth.instance
+                                      .signInWithCredential(PhoneAuthProvider.credential(
+                                      verificationId: verificationId, smsCode: otp))
+                                      .then((value) async {
+                                    if(value.user != null){
+                                      showDialog(
+                                        barrierDismissible:false,
+                                        context: context, builder: (context) {
+                                        return Dialogs.LoginSuccessful_Dialog();
+                                      },);
 
-                                       SharedPreferences pref = await SharedPreferences.getInstance();
-                                       pref.setString('userMobile',Fieldcontroller.lmobile.text);
+                                      SharedPreferences pref = await SharedPreferences.getInstance();
+                                      pref.setString('userMobile',Fieldcontroller.lmobile.text);
 
-                                       Future.delayed(Duration(seconds:4),() {
-                                         return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
-                                           return BottomHome_Screen();
-                                         }));
-                                       },);
-                                     }
-                                });
-                              } catch(e){
-                                setState(() {
-                                  Var.isloading = false;
-                                });
-                                Get.snackbar( '','',
-                                    titleText: Text('Verification failed',
-                                        style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
-                                    messageText:Text('Invalid OTP !!',
-                                        style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
-                                    icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
-                                    backgroundColor: Colors.white,boxShadows: [BoxShadow(
-                                      color:Colors.black,blurRadius:8,spreadRadius:-4,
-                                    )]
-                                );
-                              }
-                            },
-                            child: Text('Verify OTP  &  𝐋𝐎𝐆𝐈𝐍',style:GoogleFonts.roboto(
-                                color:Colors.white,fontSize:14)
-                            )
-                         )
-                            : Widget_DisableVerify_Button()
-                      ],
-                    ),
-                  )
-                ],
+                                      Future.delayed(Duration(seconds:4),() {
+                                        return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                                          return BottomHome_Screen();
+                                        }));
+                                      },);
+                                    }
+                                  });
+                                } catch(e){
+                                  setState(() {
+                                    Var.isloading = false;
+                                  });
+                                  Get.snackbar( '','',
+                                      titleText: Text('Verification failed',
+                                          style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
+                                      messageText:Text('Invalid OTP !!',
+                                          style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
+                                      icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
+                                      backgroundColor: Colors.white,boxShadows: [BoxShadow(
+                                        color:Colors.black,blurRadius:8,spreadRadius:-4,
+                                      )]
+                                  );
+                                }
+                              },
+                              child: Text('Verify OTP  &  𝐋𝐎𝐆𝐈𝐍',style:GoogleFonts.roboto(
+                                  color:Colors.white,fontSize:14)
+                              )
+                          )
+                              : Widget_DisableVerify_Button()
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        )
+            )
+        ) :
 
-        /// ============ FOR WEB ======================================= ///
-            : Scaffold(
-             backgroundColor: Colors.blueGrey.shade50,
-             body: ResponsiveBuilder(
+        /// ================================= FOR WEB SCREEN =============================== ///
+        Scaffold(
+            backgroundColor: Colors.blueGrey.shade50,
+            body: ResponsiveBuilder(
               builder: (BuildContext context, SizingInformation sizingInformation) {
                 if(sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
                   return Center(
@@ -228,224 +230,241 @@ class _Login_ScreenState extends State<Login_Screen> {
                           Row(
                             children: [
                               Expanded(
-                                flex:4,child: Image.asset('assets/myimgs/Login Page Img.jpg',
-                                    fit:BoxFit.cover,height:Get.height)
+                                  flex:4,child: Image.asset('assets/myimgs/Login Page Img.jpg',
+                                  fit:BoxFit.cover,height:Get.height)
                               ),
-                             Container(
-                               height:Get.height,width:Get.width/3+40,
-                               color:Colors.blueGrey.shade50,
-                               padding:EdgeInsets.symmetric(vertical:130,horizontal:80),
+                              Container(
+                                height:Get.height,width:Get.width/3+40,
+                                color:Colors.blueGrey.shade50,
+                                padding:EdgeInsets.symmetric(vertical:130,horizontal:80),
 
-                               child:Card(
-                                 elevation:7,color:Colors.blueGrey,
-                                 shape: RoundedRectangleBorder(
-                                     borderRadius:BorderRadius.circular(20)
-                                 ),
-                                 child: Container(
-                                   padding:EdgeInsets.only(left:20,right:20),
-                                   decoration:BoxDecoration( color:Colors.white,
-                                     borderRadius: BorderRadius.circular(20),
-                                     // border: Border.all(color:Colors.blueGrey.shade700)
-                                   ),
-                                   child: Column(
-                                     children: [
+                                child:Card(
+                                  elevation:7,color:Colors.blueGrey,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:BorderRadius.circular(20)
+                                  ),
+                                  child: Container(
+                                    padding:EdgeInsets.only(left:20,right:20),
+                                    decoration:BoxDecoration( color:Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      // border: Border.all(color:Colors.blueGrey.shade700)
+                                    ),
+                                    child: Column(
+                                      children: [
 
-                                       Image.asset('assets/myimgs/Trading app logo.png',fit:BoxFit.contain,width:130),
-                                       SizedBox(height:10),
+                                        Padding(
+                                          padding: EdgeInsets.only(top:30,bottom:20),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                height:22,width:21,alignment: Alignment.center,
+                                                padding: EdgeInsets.only(left:2),
+                                                margin: EdgeInsets.only(right:1),
+                                                decoration:BoxDecoration(color:Colors.blueAccent,borderRadius:BorderRadius.circular(3)),
+                                                child:Text('T',style:GoogleFonts.pacifico(fontSize:16.5,height:1.5)),
+                                              ),
+                                              Text("ech Info", style: GoogleFonts.ptSansCaption(
+                                                  fontSize:16,color:Colors.blueAccent,fontWeight:FontWeight.w600,height:1.5)
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height:10),
 
-                                       InkWell(
-                                         onTap:() {
-                                           Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
-                                             return Home_Screen();
-                                           },));
-                                         },
-                                         child: Text("USER LOGIN",style:GoogleFonts.roboto(
-                                             fontSize:20,color:Colors.blueAccent.shade700,
-                                             letterSpacing:0.5,fontWeight:FontWeight.w500
-                                         )),
-                                       ),
-                                       SizedBox(height:50),
+                                        InkWell(
+                                          onTap:() {
+                                            Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                                              return BottomHome_Screen();
+                                            },));
+                                          },
+                                          child: Text("USER LOGIN",style:GoogleFonts.roboto(
+                                              fontSize:20,color:Colors.blueAccent.shade700,
+                                              letterSpacing:0.5,fontWeight:FontWeight.w500
+                                          )),
+                                        ),
+                                        SizedBox(height:50),
 
-                                       TextField(
-                                         onChanged: (value) { setState(() {}); },
-                                         controller: Fieldcontroller.lmobile,
-                                         cursorColor:Colors.black,
-                                         style:GoogleFonts.roboto(fontSize:14),
-                                         textInputAction:TextInputAction.done,
-                                         keyboardType: TextInputType.phone,
-                                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                         maxLength:10,
-                                         readOnly:isReadOnly ? true : false,
-                                         decoration:InputDecoration(
-                                             isDense: true,filled:true,
-                                             fillColor:Colors.blueGrey.shade50,
-                                             hintText:'Enter Mobile No.',counterText:'',
-                                             constraints: BoxConstraints( maxHeight:45 ),
-                                             hintStyle:GoogleFonts.roboto(fontSize:13,color:Colors.black45),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius:BorderRadius.circular(5),
-                                                 borderSide: BorderSide(color:Colors.blueGrey,)
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                                 borderRadius:BorderRadius.circular(5),
-                                                 borderSide: BorderSide(color:Colors.blueAccent.shade700)
-                                             ),
-                                             prefixIcon:Icon(Icons.call,color:Colors.blue),
-                                             suffixIcon:Fieldcontroller.lmobile.text.isNotEmpty ? IconButton(onPressed: (){
-                                               setState(() {
-                                                 Fieldcontroller.lmobile.text = '';
-                                               });
-                                             }, icon: Icon(CupertinoIcons.delete,size:15,color:Colors.red)
-                                             ) : null
-                                         ),
-                                       ),
-                                       SizedBox(height:30),
+                                        TextField(
+                                          onChanged: (value) { setState(() {}); },
+                                          controller: Fieldcontroller.lmobile,
+                                          cursorColor:Colors.black,
+                                          style:GoogleFonts.roboto(fontSize:14),
+                                          textInputAction:TextInputAction.done,
+                                          keyboardType: TextInputType.phone,
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          maxLength:10,
+                                          readOnly:isReadOnly ? true : false,
+                                          decoration:InputDecoration(
+                                              isDense: true,filled:true,
+                                              fillColor:Colors.blueGrey.shade50,
+                                              hintText:'Enter Mobile No.',counterText:'',
+                                              constraints: BoxConstraints( maxHeight:45 ),
+                                              hintStyle:GoogleFonts.roboto(fontSize:13,color:Colors.black45),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderRadius:BorderRadius.circular(5),
+                                                  borderSide: BorderSide(color:Colors.blueGrey,)
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:BorderRadius.circular(5),
+                                                  borderSide: BorderSide(color:Colors.blueAccent.shade700)
+                                              ),
+                                              prefixIcon:Icon(Icons.call,color:Colors.blue),
+                                              suffixIcon:Fieldcontroller.lmobile.text.isNotEmpty ? IconButton(onPressed: (){
+                                                setState(() {
+                                                  Fieldcontroller.lmobile.text = '';
+                                                });
+                                              }, icon: Icon(CupertinoIcons.delete,size:15,color:Colors.red)
+                                              ) : null
+                                          ),
+                                        ),
+                                        SizedBox(height:30),
 
-                                       /// GENERATE OTP BUTTON ..............................
-                                       MaterialButton(
-                                         elevation:0,splashColor:Colors.black26,
-                                         shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
-                                         height:43,minWidth:Get.width/8,
-                                         color:Colors.blueAccent.shade700,
-                                         onPressed: () async {
+                                        /// GENERATE OTP BUTTON ..............................
+                                        MaterialButton(
+                                          elevation:0,splashColor:Colors.black26,
+                                          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+                                          height:43,minWidth:Get.width/8,
+                                          color:Colors.blueAccent.shade700,
+                                          onPressed: () async {
 
-                                           if(Fieldcontroller.lmobile.text.isEmpty)
-                                           {
-                                             Fluttertoast.showToast(msg:'Pls enter mobile number',
-                                                 backgroundColor:Colors.red,textColor:Colors.white,
-                                                 gravity: ToastGravity.CENTER
-                                             );
-                                           } else if(Fieldcontroller.lmobile.text.length != 10){
-                                             Fluttertoast.showToast(msg:'Invalid mobile number',
-                                                 backgroundColor:Colors.red,textColor:Colors.white
-                                             );
-                                           } else{
-                                             setState(() {
-                                               Var.isloading = true; isReadOnly = true;
-                                             });
-                                             Widget_OnPressed_GenerateBtn();
-                                           }
-                                         },
-                                         child: Text('Generate OTP',style:GoogleFonts.roboto(
-                                             color:Colors.white,fontSize:13)),
-                                       ),
-                                       SizedBox(height:55),
+                                            if(Fieldcontroller.lmobile.text.isEmpty)
+                                            {
+                                              Fluttertoast.showToast(msg:'Pls enter mobile number',
+                                                  backgroundColor:Colors.red,textColor:Colors.white,
+                                                  gravity: ToastGravity.CENTER
+                                              );
+                                            } else if(Fieldcontroller.lmobile.text.length != 10){
+                                              Fluttertoast.showToast(msg:'Invalid mobile number',
+                                                  backgroundColor:Colors.red,textColor:Colors.white
+                                              );
+                                            } else{
+                                              setState(() {
+                                                Var.isloading = true; isReadOnly = true;
+                                              });
+                                              Widget_OnPressed_GenerateBtn();
+                                            }
+                                          },
+                                          child: Text('Generate OTP',style:GoogleFonts.roboto(
+                                              color:Colors.white,fontSize:13)),
+                                        ),
+                                        SizedBox(height:55),
 
-                                       /// PINPUT TEXTFIELD ............................
-                                       SizedBox(
-                                         height:50,width:Get.width/2+110,
-                                         child: Pinput(
-                                           defaultPinTheme: PinTheme(
-                                               decoration:BoxDecoration(color:Colors.grey.shade300,
-                                                   borderRadius:BorderRadius.circular(5),
-                                                   border: Border.all(color:Colors.blueGrey)
-                                               )
-                                           ),
-                                           closeKeyboardWhenCompleted:true,
-                                           onChanged: (value) { otp = value; },
-                                           length:6,
-                                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                           keyboardType:TextInputType.number,
-                                         ),
-                                       ),
-                                       SizedBox(height:30),
+                                        /// PINPUT TEXTFIELD ............................
+                                        SizedBox(
+                                          height:50,width:Get.width/2+110,
+                                          child: Pinput(
+                                            defaultPinTheme: PinTheme(
+                                                decoration:BoxDecoration(color:Colors.grey.shade300,
+                                                    borderRadius:BorderRadius.circular(5),
+                                                    border: Border.all(color:Colors.blueGrey)
+                                                )
+                                            ),
+                                            closeKeyboardWhenCompleted:true,
+                                            onChanged: (value) { otp = value; },
+                                            length:6,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            keyboardType:TextInputType.number,
+                                          ),
+                                        ),
+                                        SizedBox(height:30),
 
 
-                                       /// VERIFY OTP BUTTON ........................
-                                       MaterialButton(
-                                           elevation:0,splashColor:Colors.black26,
-                                           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
-                                           height:43,minWidth:Get.width,
-                                           color:Colors.green.shade700,
-                                           onPressed: () async {
-                                             setState(() {
-                                               Var.isloading = true;
-                                             });
-                                             try{
-                                               setState(() {
-                                                 Var.isloading = false;
-                                               });
-                                               await FirebaseAuth.instance
-                                                   .signInWithCredential(PhoneAuthProvider.credential(
-                                                   verificationId: verificationId, smsCode: otp)).then((value) async {
-                                                 if(value.user != null){
-                                                   /// WEB LOGIN SUCCESS DIALOG....................................
-                                                   showDialog(
-                                                     barrierDismissible:false,
-                                                     context: context, builder: (context) {
-                                                     return  Container(
-                                                       margin:EdgeInsets.symmetric(vertical:290,horizontal:550),
-                                                       decoration:BoxDecoration(
-                                                           color:Colors.white,borderRadius:BorderRadius.circular(10)
-                                                       ),
-                                                       child:Column(
-                                                         children: [
-                                                           Container(
-                                                             height:Get.height/6-27,width:Get.width,
-                                                             margin: EdgeInsets.only(bottom:15),
-                                                             decoration:BoxDecoration( color:Colors.white,
-                                                                 borderRadius:BorderRadius.vertical(top:Radius.circular(20))
-                                                             ),
-                                                             child:ClipRRect(
-                                                                 child: Lottie.asset('assets/mylottie/Lottie Succes Dialog animation img.json')
-                                                             ),
-                                                           ),
-                                                           Row(
-                                                             mainAxisAlignment: MainAxisAlignment.center,
-                                                             children: [
-                                                               Text('User Verified \t',style:GoogleFonts.roboto(
-                                                                   fontSize:17.5,color:Colors.lightBlue,fontWeight:FontWeight.normal,
-                                                                   decoration:TextDecoration.none)
-                                                               ),
-                                                               Icon(Icons.verified,color:Colors.lightBlue,size:20)
-                                                             ],
-                                                           ),
-                                                           SizedBox(height:10),
-                                                           Text('Login Completed Successfully !!',style:GoogleFonts.ptSans(
-                                                               fontSize:15.5,color:Colors.black,fontWeight:FontWeight.normal,
-                                                               decoration:TextDecoration.none)
-                                                           )
-                                                         ],
-                                                       ),
-                                                     );
-                                                   },
-                                                   );
+                                        /// VERIFY OTP BUTTON ........................
+                                        MaterialButton(
+                                            elevation:0,splashColor:Colors.black26,
+                                            shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+                                            height:43,minWidth:Get.width,
+                                            color:Colors.green.shade700,
+                                            onPressed: () async {
+                                              setState(() {
+                                                Var.isloading = true;
+                                              });
+                                              try{
+                                                setState(() {
+                                                  Var.isloading = false;
+                                                });
+                                                await FirebaseAuth.instance
+                                                    .signInWithCredential(PhoneAuthProvider.credential(
+                                                    verificationId: verificationId, smsCode: otp)).then((value) async {
+                                                  if(value.user != null){
+                                                    /// WEB LOGIN SUCCESS DIALOG....................................
+                                                    showDialog(
+                                                      barrierDismissible:false,
+                                                      context: context, builder: (context) {
+                                                      return  Container(
+                                                        margin:EdgeInsets.symmetric(vertical:290,horizontal:550),
+                                                        decoration:BoxDecoration(
+                                                            color:Colors.white,borderRadius:BorderRadius.circular(10)
+                                                        ),
+                                                        child:Column(
+                                                          children: [
+                                                            Container(
+                                                              height:Get.height/6-27,width:Get.width,
+                                                              margin: EdgeInsets.only(bottom:15),
+                                                              decoration:BoxDecoration( color:Colors.white,
+                                                                  borderRadius:BorderRadius.vertical(top:Radius.circular(20))
+                                                              ),
+                                                              child:ClipRRect(
+                                                                  child: Lottie.asset('assets/mylottie/Lottie Succes Dialog animation img.json')
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              children: [
+                                                                Text('User Verified \t',style:GoogleFonts.roboto(
+                                                                    fontSize:17.5,color:Colors.lightBlue,fontWeight:FontWeight.normal,
+                                                                    decoration:TextDecoration.none)
+                                                                ),
+                                                                Icon(Icons.verified,color:Colors.lightBlue,size:20)
+                                                              ],
+                                                            ),
+                                                            SizedBox(height:10),
+                                                            Text('Login Completed Successfully !!',style:GoogleFonts.ptSans(
+                                                                fontSize:15.5,color:Colors.black,fontWeight:FontWeight.normal,
+                                                                decoration:TextDecoration.none)
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    );
 
-                                                   SharedPreferences pref = await SharedPreferences.getInstance();
-                                                   pref.setString('userMobile',Fieldcontroller.lmobile.text);
+                                                    SharedPreferences pref = await SharedPreferences.getInstance();
+                                                    pref.setString('userMobile',Fieldcontroller.lmobile.text);
 
-                                                   Future.delayed(Duration(seconds:3),() {
-                                                     return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
-                                                       return BottomHome_Screen();
-                                                     }));
-                                                   },);
-                                                 }
-                                               });
-                                             } catch(e){
-                                               setState(() {
-                                                 Var.isloading = false;
-                                               });
-                                               Get.snackbar( '','',
-                                                   titleText: Text('Verification failed',
-                                                       style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
-                                                   messageText:Text('Invalid OTP !!',
-                                                       style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
-                                                   icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
-                                                   backgroundColor: Colors.white,boxShadows: [BoxShadow(
-                                                     color:Colors.black,blurRadius:8,spreadRadius:-4,
-                                                   )]
-                                               );
-                                             }
-                                           },
-                                           child: Text('Verify OTP & Sign In',style:GoogleFonts.roboto(
-                                               color:Colors.white,fontSize:13)
-                                           )
-                                       )
-                                     ],
-                                   ),
-                                 ),
-                               ),
-                             )
+                                                    Future.delayed(Duration(seconds:3),() {
+                                                      return Navigator.pushReplacement(context,MaterialPageRoute(builder:(context) {
+                                                        return BottomHome_Screen();
+                                                      }));
+                                                    },);
+                                                  }
+                                                });
+                                              } catch(e){
+                                                setState(() {
+                                                  Var.isloading = false;
+                                                });
+                                                Get.snackbar( '','',
+                                                    titleText: Text('Verification failed',
+                                                        style:GoogleFonts.ptSans(fontSize:15,color:Colors.blueAccent)),
+                                                    messageText:Text('Invalid OTP !!',
+                                                        style:GoogleFonts.roboto(fontSize:13,color:Colors.red)),
+                                                    icon:Icon(Iconsax.danger,color:Colors.red),borderRadius:15,
+                                                    backgroundColor: Colors.white,boxShadows: [BoxShadow(
+                                                      color:Colors.black,blurRadius:8,spreadRadius:-4,
+                                                    )]
+                                                );
+                                              }
+                                            },
+                                            child: Text('Verify OTP & Sign In',style:GoogleFonts.roboto(
+                                                color:Colors.white,fontSize:13)
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           )
                         ],
@@ -453,11 +472,34 @@ class _Login_ScreenState extends State<Login_Screen> {
                     ),
                   );
                 }
-                return Container(color:Colors.purple);
+                return Stack(
+                  children: [
+
+                   Container(
+                     height: Get.height,width:Get.width,
+                     decoration: BoxDecoration(
+                         image: DecorationImage(
+                           image: ExactAssetImage('assets/myimgs/Login Page Img.jpg'),
+                           fit: BoxFit.cover)),
+                     child: BackdropFilter( filter: ImageFilter.blur(sigmaX:3, sigmaY:3),
+                       child: Container(
+                         decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                       ),
+                     ),
+                   ),
+
+                    Align(
+                        alignment: Alignment.center, child: Text('Welcome To Tech Info . . .',
+                            style: GoogleFonts.pacifico(color:Colors.white70,
+                                fontSize:25,fontStyle: FontStyle.italic)
+                        )
+                    )
+                  ],
+                );
               },
             )
-        ),
-      ),
+        )
+      )
     );
   }
 
@@ -569,10 +611,10 @@ class _Login_ScreenState extends State<Login_Screen> {
           ),
           prefixIcon:Icon(Icons.call,color:Colors.blue),
           suffixIcon:Fieldcontroller.lmobile.text.isNotEmpty ? IconButton(onPressed: (){
-             setState(() {
-               Fieldcontroller.lmobile.text = '';
-             });
-           }, icon: Icon(CupertinoIcons.clear,size:15,color:Colors.blue)
+            setState(() {
+              Fieldcontroller.lmobile.text = '';
+            });
+          }, icon: Icon(CupertinoIcons.clear,size:15,color:Colors.blue)
           ) : null
       ),
     );

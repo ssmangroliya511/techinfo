@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use, prefer_const_literals_to_create_immutables, non_constant_identifier_names, unused_import, camel_case_types
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:linkedin_clone/WEB%20SCREENS/Dashboard_Screen.dart';
 import 'package:linkedin_clone/SCREENS/NewPost_Screen.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../DRAWER CLS/Drawerr_cls.dart';
 import '../STATIC CLS/Static_class.dart';
@@ -38,6 +40,7 @@ class _Home_ScreenState extends State<Home_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    /// ========================== FOR MOBILE SCREEN ==================================///
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       key: scaffoldKey,
@@ -56,7 +59,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       drawer: Drawerr(),
       body: ScrollConfiguration(
         behavior: ScrollBehavior(
-
+          androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
         ),
         child: ListView.builder(
           itemCount: 5,
@@ -72,7 +75,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 ListTile(
                   leading:CircleAvatar(
                       radius:20,backgroundColor:Colors.black12,
-                      backgroundImage: AssetImage('myimgs/Amazone ceo img demo.jpg'),
+                      backgroundImage: AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
                   ),
                   title:Text('Amazon india',style:GoogleFonts.robotoCondensed(fontSize:14.5,fontWeight:FontWeight.w600)),
                   subtitle:Text('Product Sales & Community',style:GoogleFonts.roboto(fontSize:12)),
@@ -131,7 +134,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                   margin: EdgeInsets.all(10),
                   child: ClipRRect(
                     borderRadius:BorderRadius.circular(5  ),
-                    child: Image.asset('myimgs/amazone com img demo.jpg'),
+                    child: Image.asset('assets/myimgs/Tech info Post demo.jpg'),
                   ),
                 ),
 
@@ -212,8 +215,6 @@ class _Home_ScreenState extends State<Home_Screen> {
     );
   }
 
-
-
   Widget_DefaultAppbar(){
     return AppBar(
       toolbarHeight:53,
@@ -245,7 +246,7 @@ class _Home_ScreenState extends State<Home_Screen> {
           },
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child:Image.asset('myimgs/User No Profile Dp.png'),
+            backgroundImage: AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
           ),
         ),
       ),
@@ -260,7 +261,6 @@ class _Home_ScreenState extends State<Home_Screen> {
       ],
     );
   }
-
 
   Widget_SearchAppbar(){
     return AppBar(
@@ -308,7 +308,7 @@ class _Home_ScreenState extends State<Home_Screen> {
           },
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child:Image.asset('myimgs/User No Profile Dp.png'),
+            backgroundImage: AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
           ),
         ),
       ),

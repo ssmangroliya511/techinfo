@@ -49,7 +49,8 @@ class _DrawerrState extends State<Drawerr> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    radius:35,child:Image.asset('myimgs/User No Profile Dp.png'),
+                    radius:35,
+                    backgroundImage: AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
                   ),
                   Text('Sagar Mangroliya',style:GoogleFonts.ptSans(fontSize:19,fontWeight:FontWeight.w600),),
                   InkWell(onTap: () {

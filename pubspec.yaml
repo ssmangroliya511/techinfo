@@ -63,6 +63,10 @@ dependencies:
   video_player:
   animated_icon:
   speed_dial_fab:
+  flutter_sizer:
+  side_navigation:
+  collapsible_sidebar:
+  flutter_side_menu:
 
 
 dev_dependencies:

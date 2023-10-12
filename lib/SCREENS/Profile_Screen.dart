@@ -51,7 +51,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                   height:Get.height/4-45,width:Get.width,
                   decoration: BoxDecoration(
                       color: Colors.white,image: DecorationImage(
-                      image: AssetImage('myimgs/profile cover bg.jpg'),
+                      image: AssetImage('assets/myimgs/Tech Info Profile Cover Image.png'),
                       fit: BoxFit.fitWidth,opacity:0.3)
                   ),
                   child:Align( alignment: Alignment.topCenter,
@@ -104,7 +104,7 @@ class _Profile_ScreenState extends State<Profile_Screen> {
                           child: Row(
                             children: [ CircleAvatar(
                                 radius:55,backgroundColor:Colors.grey.shade100,
-                                backgroundImage:AssetImage('myimgs/Amazone ceo img demo.jpg'),
+                                backgroundImage:AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
                               ),
                               SizedBox(width:20),
                               Text("Sagar Mangroliya", style:GoogleFonts.poppins(

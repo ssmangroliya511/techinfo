@@ -2,15 +2,20 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linkedin_clone/SCREENS/BottomHome_Screen.dart';
+import 'package:linkedin_clone/WEB%20SCREENS/Dashboard_Screen.dart';
 import 'AUTH/Login_Screen.dart';
 import 'STATIC CLS/Static_class.dart';
 
 void main() async {
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -32,7 +37,7 @@ Widget build(BuildContext context) {
   return GetMaterialApp(
     title: 'Tech Info',debugShowCheckedModeBanner:false,
     // home: Splash_Screen(),
-    home: Login_Screen(),
+    home: Dashboard_Screen(),
   );
 }
 }
