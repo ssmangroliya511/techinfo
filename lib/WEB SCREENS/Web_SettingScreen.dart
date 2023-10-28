@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../SCREENS/NewPost_Screen.dart';
+import '../POSTS/AddPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 
 

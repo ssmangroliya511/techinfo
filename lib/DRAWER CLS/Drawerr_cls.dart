@@ -1,15 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../MY PROFILE/MyProfile_Screen.dart';
 import '../SCREENS/BottomHome_Screen.dart';
-import '../SCREENS/NewPost_Screen.dart';
-import '../SCREENS/Profile_Screen.dart';
+import '../POSTS/AddPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
+import '../UPDATE PROFILE/UpdateProfile_Screen.dart';
 
 class Drawerr extends StatefulWidget {
   const Drawerr({Key? key}) : super(key: key);
@@ -42,23 +44,86 @@ class _DrawerrState extends State<Drawerr> {
             Container(
               height:Get.height/4-30,width:Get.width/2,
               margin:EdgeInsets.only(bottom:10),
-              padding:EdgeInsets.only(left:15),
               color:Colors.white,
               child:Column(
-                mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment:MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius:35,
-                    backgroundImage: AssetImage('assets/myimgs/Amazone ceo img demo.jpeg'),
+
+                  Container(
+                      height:90,width:90,
+                      margin: EdgeInsets.only(bottom:10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.white,borderRadius: BorderRadius.circular(100),
+                        border: Border.all(color: Colors.blueAccent),
+                        boxShadow: [BoxShadow(color:Colors.black26,blurRadius:15,spreadRadius:-5)],
+                      ),
+                      child: InkWell(
+                        borderRadius:BorderRadius.circular(100),
+                        onTap:(){
+                          Navigator.pop(context);
+                          Get.to(MyProfile_Screen());
+                        },
+                        child: SizedBox(
+                          height:90,width:90,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Userdata.UserImage == null ?
+                            Center(child: Text(Userdata.UserName.toString().toUpperCase().substring(0,1),
+                                style:GoogleFonts.ptSans(fontSize:55,
+                                    fontWeight:FontWeight.w600,color:Colors.white))
+                            ) :
+                            CachedNetworkImage(
+                              imageUrl: Urls.mainurl + Userdata.UserImage.toString(),fit:BoxFit.cover,
+                              placeholder: (context, url) {
+                                return CircularProgressIndicator(
+                                    color:Colors.blueAccent.shade700,strokeWidth:2.5);
+                              },
+                              errorWidget: (context, url, error) {
+                                return Center(child: Text(Userdata.UserName.toString().toUpperCase().substring(0,1),
+                                    style:GoogleFonts.ptSans(fontSize:55,
+                                        fontWeight:FontWeight.w600,color:Colors.indigo))
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      )
                   ),
-                  Text('Sagar Mangroliya',style:GoogleFonts.ptSans(fontSize:19,fontWeight:FontWeight.w600),),
-                  InkWell(onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context,MaterialPageRoute(builder:(context) {
-                      return Profile_Screen();
-                    },));
-                  },child: Text('+917046379090',style:GoogleFonts.ptSans(fontSize:14),))
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(LineAwesome.user,size:18),
+                      Icon(LineAwesome.user,size:18),
+                      Padding(
+                        padding: EdgeInsets.only(left:7),
+                        child: Text('${Userdata.UserName}',
+                          style:GoogleFonts.ptSans(fontSize:15,fontWeight:FontWeight.w500),),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height:5),
+
+                  Userdata.UserPhone == null || Userdata.UserPhone == '' ?
+                  SizedBox() :
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(LineAwesome.phone_alt_solid,size:17),SizedBox(width:5),
+
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.to(MyProfile_Screen());
+                        },child: Text('+91${Userdata.UserPhone}',
+                          style:GoogleFonts.ptSans(fontSize:13,color:Colors.black)
+                        )
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -84,7 +149,7 @@ class _DrawerrState extends State<Drawerr> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,MaterialPageRoute(builder:(context) {
-                  return Profile_Screen();
+                  return MyProfile_Screen();
                 },));
               },
             ),
@@ -98,7 +163,7 @@ class _DrawerrState extends State<Drawerr> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,MaterialPageRoute(builder:(context) {
-                  return NewPost_Screen();
+                  return AddPost_Screen();
                 },));
               },
             ),
@@ -130,7 +195,7 @@ class _DrawerrState extends State<Drawerr> {
               tileColor:Colors.white,dense:true,
               onTap: ()  {
                 Navigator.pop(context);
-                Dialogs.Logout_Dialog(context);
+                Dialogs.Logout_Dialog(context,setState);
               },
             ),
             Var.AppVersion == null ? SizedBox() : Padding

@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../SCREENS/NewPost_Screen.dart';
+import '../POSTS/AddPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 
 
@@ -28,14 +28,8 @@ class _Web_HomeScreenState extends State<Web_HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    shareprefs();
   }
-  shareprefs() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    Var.UserMobile = pref.getString('userMobile');
-    print('UserMobile ${Var.UserMobile}');
-    setState(() {});
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +45,7 @@ class _Web_HomeScreenState extends State<Web_HomeScreen> {
               // Get.to(NewPost_Screen());
               setState(() {
                 Navigator.push(context,MaterialPageRoute(builder: (context) {
-                  return NewPost_Screen();
+                  return AddPost_Screen();
                 },));
                 Var.selectedIndex = 2;
               });

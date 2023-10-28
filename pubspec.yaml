@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   rive: ^0.9.1
   get:
+  dio:
   package_info_plus:
   icons_plus:
   animated_splash_screen:
@@ -61,13 +62,17 @@ dependencies:
   lottie:
   image_editor_plus:
   video_player:
+  chewie:
   animated_icon:
   speed_dial_fab:
   flutter_sizer:
   side_navigation:
   collapsible_sidebar:
   flutter_side_menu:
-
+  cached_network_image:
+  device_info_plus:
+  shimmer:
+  readmore:
 
 dev_dependencies:
   build_runner:

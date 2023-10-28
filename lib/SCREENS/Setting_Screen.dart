@@ -7,7 +7,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../DRAWER CLS/Drawerr_cls.dart';
 import '../STATIC CLS/Static_class.dart';
-import 'UpdateProfile_Screen.dart';
+import '../UPDATE PROFILE/UpdateProfile_Screen.dart';
 
 class Setting_Screen extends StatefulWidget {
   const Setting_Screen({Key? key}) : super(key: key);

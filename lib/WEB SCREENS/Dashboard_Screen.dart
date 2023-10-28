@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:linkedin_clone/SCREENS/NewPost_Screen.dart';
+import 'package:linkedin_clone/MY%20PROFILE/MyProfile_Screen.dart';
+import 'package:linkedin_clone/POSTS/AddPost_Screen.dart';
 import 'package:linkedin_clone/WEB%20SCREENS/Web_HomeScreen.dart';
 import 'package:linkedin_clone/WEB%20SCREENS/Web_SettingScreen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import '../SCREENS/Profile_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 
 class Dashboard_Screen extends StatefulWidget {
@@ -40,8 +40,8 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
 
   List<Widget> Screens = [
     Center(child: Web_HomeScreen()),
-    Center(child: Profile_Screen()),
-    Center(child: NewPost_Screen()),
+    Center(child: MyProfile_Screen()),
+    Center(child: AddPost_Screen()),
     Center(child: Web_SettingScreen()),
   ];
 
@@ -216,7 +216,7 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
                               leading: Icon(EvaIcons.log_out, color: Colors.red), dense:true,
                               title: Text("SIGN OUT",style:GoogleFonts.ptSansCaption(fontSize:14,color:Colors.red)),
                               onTap: ()  {
-                                Dialogs.Logout_Dialog(context);
+                                Dialogs.Logout_Dialog(context,setState);
                               },
                             ),
                             SizedBox(height:10),

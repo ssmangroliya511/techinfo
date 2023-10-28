@@ -4,15 +4,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:linkedin_clone/SCREENS/ViewPost_Screen.dart';
+import 'package:linkedin_clone/MY%20PROFILE/MyProfile_Screen.dart';
+import 'package:linkedin_clone/MY%20PROFILE/YourPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
-import 'Home_Screen.dart';
+import '../HOME/Home_Screen.dart';
 import 'Notification_Screen.dart';
-import 'NewPost_Screen.dart';
-import 'Profile_Screen.dart';
 
 class BottomHome_Screen extends StatefulWidget {
-  const BottomHome_Screen({Key? key}) : super(key: key);
+  const BottomHome_Screen( {Key? key}) : super(key: key);
 
   @override
   State<BottomHome_Screen> createState() => _BottomHome_ScreenState();
@@ -23,9 +22,9 @@ class _BottomHome_ScreenState extends State<BottomHome_Screen> {
   static final List<Widget> _pages = <Widget>
   [
        Home_Screen(),
-       ViewPost_Screen(),
+       YourPost_Screen(),
        Notification_Screen(),
-       Profile_Screen(),
+       MyProfile_Screen(),
   ];
 
 
