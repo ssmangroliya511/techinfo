@@ -12,10 +12,11 @@ import 'package:linkedin_clone/POSTS/AddPost_Screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 import '../DRAWER CLS/Drawerr_cls.dart';
+import '../POSTS/ViewPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 import '../UPDATE PROFILE/UpdateProfile_Screen.dart';
 import '../VIDEO CONTROLLERS/VideoController_network.dart';
-import 'DeletePost_Controller.dart';
+import 'UpdatePost_Screen.dart';
 
 class MyProfile_Screen extends StatefulWidget {
   const MyProfile_Screen({Key? key}) : super(key: key);
@@ -41,6 +42,22 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Utils.scaffoldColor,
+
+      appBar: AppBar(
+        toolbarHeight:55,
+        backgroundColor:Colors.white,elevation: 0, centerTitle:true,
+        iconTheme: IconThemeData(color:Colors.blueAccent),
+        actionsIconTheme:IconThemeData(color:Colors.blueAccent),
+        title: Text("Your Profile", style: GoogleFonts.ptSansCaption(
+            fontSize:16,color:Colors.blueAccent,fontWeight:FontWeight.w600)
+        ),
+        leading:IconButton(
+            splashColor: Colors.transparent,highlightColor:Colors.transparent,
+            onPressed:() {
+              scaffoldKey.currentState!.openDrawer();
+            },icon: Icon(BoxIcons.bx_grid_horizontal)
+        ),
+      ),
 
       drawer: Drawerr(),
 
@@ -72,35 +89,20 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                  splashColor: Colors.transparent,highlightColor:Colors.transparent,
-                                  onPressed:() {
-                                    scaffoldKey.currentState!.openDrawer();
-                                  },icon: Icon(BoxIcons.bx_grid_horizontal)
-                              ),
-                              Text("Your Profile", style: GoogleFonts.ptSansCaption(
-                                  fontSize:16,color:Colors.blueAccent,fontWeight:FontWeight.w600)
-                              ),
-                              SizedBox(width:40)
-                            ],
-                          ),
-                          Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top:10,bottom:10,right:20),
+                                padding: EdgeInsets.only(top:10,bottom:10,right:10),
                                 child: SizedBox(
                                   height:38,width:115,
                                   child: FloatingActionButton.extended(
                                       elevation:0,
                                       shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(10)),
-                                      backgroundColor: Colors.black26,
+                                      backgroundColor: Colors.white,
                                       onPressed: () {
                                         Dialogs.Logout_Dialog(context,setState);
-                                      },icon:Icon(BoxIcons.bx_log_out, color: Colors.white,size:18),
-                                      label: Text('Logout?',style:GoogleFonts.roboto(color:Colors.white))
+                                      },icon:Icon(BoxIcons.bx_log_out, color: Colors.red.shade400,size:18),
+                                      label: Text('Logout?',style:GoogleFonts.roboto(color:Colors.red.shade400))
                                   ),
                                 ),
                               )
@@ -330,6 +332,7 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                     ),
                   ),
                   title: Text('City',style:GoogleFonts.ptSerifCaption(),),
+
                   trailing:Userdata.UserCity == null || Userdata.UserCity == '' ?
 
                   GestureDetector( onTap: () => Get.to(UpdateProfile_Screen()),
@@ -365,14 +368,16 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                physics: NeverScrollableScrollPhysics(),
                itemCount: getxController.myPostController.mypostModel.value.business!.post!.length,
                itemBuilder: (context, index) {
-
-                 var postId           = getxController.myPostController.mypostModel.value.business!.post![index].postId.toString();
-                 var createdate       = getxController.myPostController.mypostModel.value.business!.post![index].createdAt.toString();
-                 var postTitle        = getxController.myPostController.mypostModel.value.business!.post![index].pTitle.toString();
-                 var postDescription  = getxController.myPostController.mypostModel.value.business!.post![index].pDesc.toString();
-                 var postStatus       = getxController.myPostController.mypostModel.value.business!.post![index].status.toString();
-                 var postSource       = getxController.myPostController.mypostModel.value.business!.post![index].source.toString();
-                 var postMediaType    = getxController.myPostController.mypostModel.value.business!.post![index].mediaType.toString();
+                 dynamic INDEX         = index;
+                 dynamic postId        = getxController.myPostController.mypostModel.value.business!.post![index].postId.toString();
+                 dynamic postTitle     = getxController.myPostController.mypostModel.value.business!.post![index].pTitle.toString();
+                 dynamic postDescri    = getxController.myPostController.mypostModel.value.business!.post![index].pDesc.toString();
+                 dynamic postcreateAt  = getxController.myPostController.mypostModel.value.business!.post![index].createdAt.toString();
+                 dynamic postSource    = getxController.myPostController.mypostModel.value.business!.post![index].source.toString();
+                 dynamic postMediaType = getxController.myPostController.mypostModel.value.business!.post![index].mediaType.toString();
+                 dynamic postStatus    = getxController.myPostController.mypostModel.value.business!.post![index].status.toString();
+                 dynamic userImage     = Userdata.UserImage;
+                 dynamic userName      = Userdata.UserName;
 
                  return Container(
                    width:Get.width,
@@ -412,13 +417,13 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                              ),
                            ),
                            title:RichText(
-                             text:TextSpan(text:'You (${Userdata.UserName})\t ',
+                             text:TextSpan(text:'You \t ',
                                    style:GoogleFonts.poppins(color:Colors.black,
                                        fontWeight:FontWeight.w500,fontSize:12.5),
 
                                children: [
                                  TextSpan(
-                                     text:createdate.toString().substring(0,10),
+                                     text:postcreateAt.toString().substring(0,10),
                                         style:GoogleFonts.ptSerif(color:Colors.blueGrey,fontSize:11)
                                  )
                                ]
@@ -426,7 +431,7 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                            ),
 
                            subtitle: RichText(
-                             text: TextSpan(text:createdate.toString().substring(11,16),
+                             text: TextSpan(text:postcreateAt.toString().substring(11,16),
                                       style:GoogleFonts.roboto(color:Colors.black45,fontSize:10),
 
                                  children: [
@@ -440,31 +445,24 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                          trailing: Row(
                            mainAxisSize: MainAxisSize.min,
                             children: [
+
                               PostStatus_Button(postStatus,postId),
 
                               /// UPDATE POST BUTTON.......................
                               Padding(
-                                padding:EdgeInsets.only(right:7),
-                                child: Obx((){
-                                  return !getxController.updatePostController.isLoading.value ?
-                                  GestureDetector(
+                                  padding:EdgeInsets.only(right:7),
+                                  child:  GestureDetector(
                                     onTap: () {
-
-                                      Get.to(AddPost_Screen());
-
-                                      // Var.postId          = getxController.myPostController.mypostModel.value.business!.post![index].postId;
-                                      // Var.postTitle       = getxController.addPostController.atitleController.value.text;
-                                      // Var.postDescription = getxController.addPostController.adescriptionController.value.text;
-                                      // Var.postSourse      = '';
-                                      //
-                                      // getxController.updatePostController.FetchUpdatePost_ApiData();
+                                      dynamic postID = postId;
+                                      dynamic index = INDEX;
+                                      Get.to(UpdatePost_Screen(postID,index));
+                                      // getxController.updatePostController.isLoading.value = false;
                                     },
                                     child: CircleAvatar(
                                         radius:13,backgroundColor:Colors.orange,
                                         child: Icon(Iconsax.edit,size:15,color:Colors.white)
                                     ),
-                                  ) : Lottie.asset('assets/mylottie/Dot Loading Animation.json');
-                                })
+                                  )
                               ),
 
                               /// DELETE POST BUTTON............
@@ -492,7 +490,7 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                        Container(
                          alignment: Alignment.centerLeft,
                          margin:EdgeInsets.only(left:2,right:5,top:5,bottom:10),
-                         child:Text('${postTitle.capitalize}', style:Utils.posttitleStyle),
+                         child:Text('$postTitle', style:Utils.posttitleStyle),
                        ),
 
                        /// Post Images Or Videos Section .............................
@@ -556,11 +554,35 @@ class _MyProfile_ScreenState extends State<MyProfile_Screen> {
                            )
                            : postMediaType == 'text' ? Container() : SizedBox(),
 
-                       /// Description Section .....................
+                       /// Description Section .....................................
                        Container(
-                         alignment: Alignment.centerLeft,
-                         margin:EdgeInsets.only(left:2,right:5,top:10,bottom:10),
-                         child: Text('${postDescription.capitalize}',style:GoogleFonts.poppins(fontSize:12.5),),
+                           alignment: Alignment.centerLeft,
+                           margin:EdgeInsets.only(top:10,left:5,right:5),
+                           child: Column(
+                             children: [
+                               Text(postDescri,style:Utils.postDescripStyle,maxLines:5),
+
+                               postDescri.isEmpty ? SizedBox() :
+                               Align(
+                                   alignment:Alignment.topRight,
+                                   child: GestureDetector(
+                                     onTap: (){
+                                         setState(() {
+                                           Var.postId = postId;
+                                         });
+                                         Get.to(
+                                             ViewPost_Screen(
+                                             postTitle, postDescri, postcreateAt,postSource,
+                                             postMediaType,userImage,userName)
+                                         );
+                                     },
+                                     child: Text('.... Read More', style:GoogleFonts.ptSerif(
+                                         fontWeight: FontWeight.w600,fontSize:13),maxLines:5
+                                     ),
+                                   )
+                               ),
+                             ],
+                           )
                        ),
 
                        Divider(),

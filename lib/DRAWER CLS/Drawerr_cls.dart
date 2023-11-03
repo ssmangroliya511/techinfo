@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:linkedin_clone/SCREENS/Notification_Screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../MY PROFILE/MyProfile_Screen.dart';
 import '../SCREENS/BottomHome_Screen.dart';
 import '../POSTS/AddPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
-import '../UPDATE PROFILE/UpdateProfile_Screen.dart';
 
 class Drawerr extends StatefulWidget {
   const Drawerr({Key? key}) : super(key: key);
@@ -96,7 +96,6 @@ class _DrawerrState extends State<Drawerr> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(LineAwesome.user,size:18),
-                      Icon(LineAwesome.user,size:18),
                       Padding(
                         padding: EdgeInsets.only(left:7),
                         child: Text('${Userdata.UserName}',
@@ -157,7 +156,7 @@ class _DrawerrState extends State<Drawerr> {
 
             ListTile(
               leading: Icon( Iconsax.additem,color: Colors.black),
-              title: Text("New Post", style: GoogleFonts.ptSansCaption(fontSize:14)),
+              title: Text("Add New Post", style: GoogleFonts.ptSansCaption(fontSize:14)),
               trailing: Icon(CupertinoIcons.right_chevron,size:15,color:Colors.blueAccent.shade100),
               tileColor:Colors.white,dense:true,
               onTap: () {
@@ -169,10 +168,25 @@ class _DrawerrState extends State<Drawerr> {
             ),
             SizedBox(height:10),
 
+
+            ListTile(
+              leading: Icon(FontAwesome.bell,color: Colors.black,size:19),
+              title: Text("Notifications", style: GoogleFonts.ptSansCaption(fontSize:14)),
+              trailing: Icon(CupertinoIcons.right_chevron,size:15,color:Colors.blueAccent.shade100),
+              tileColor:Colors.white,dense:true,
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder:(context) {
+                  return Notification_Screen();
+                },));
+              },
+            ),
+            SizedBox(height:10),
+
+
             ListTile(
                 leading: Icon(IonIcons.settings, color: Colors.black,size:22),
-                title: Text("Settings",
-                    style: GoogleFonts.ptSansCaption(fontSize: 14)),
+                title: Text("Settings", style: GoogleFonts.ptSansCaption(fontSize: 14)),
                 trailing: Icon(CupertinoIcons.right_chevron,size:15,color:Colors.blueAccent.shade100),
                 tileColor:Colors.white,dense:true,
                 onTap: () {}
@@ -180,9 +194,9 @@ class _DrawerrState extends State<Drawerr> {
             SizedBox(height:30),
 
             ListTile(
-              leading: Icon(Bootstrap.info, color: Colors.blue),
+              leading: Icon(Bootstrap.info, color: Colors.blueGrey),
               title: Text("About",style:GoogleFonts.ptSansCaption(fontSize:14,
-                     fontWeight:FontWeight.w400,color:Colors.blue)),
+                     fontWeight:FontWeight.w400,color:Colors.blueGrey)),
               tileColor:Colors.white,dense:true,
               onTap: () {},
             ),
@@ -198,11 +212,17 @@ class _DrawerrState extends State<Drawerr> {
                 Dialogs.Logout_Dialog(context,setState);
               },
             ),
-            Var.AppVersion == null ? SizedBox() : Padding
-              (padding: EdgeInsets.only(top:200,left:100),
-                child:Text("Version ${Var.AppVersion}",
-                    style:GoogleFonts.aBeeZee(fontSize: 14.5,color: Colors.blueAccent.shade200))
-            )
+            SizedBox(height:10),
+
+            Var.AppVersion == null ? SizedBox() :
+            ListTile(
+              leading: Icon(Bootstrap.app, color: Colors.blue,size:17,),
+              title: Text("Version ${Var.AppVersion}",
+                  style:GoogleFonts.ptSansCaption(fontSize:14,
+                  fontWeight:FontWeight.w400,color:Colors.blue)),
+              tileColor:Colors.white,dense:true,
+            ),
+            SizedBox(height:10),
           ],
         )
     );

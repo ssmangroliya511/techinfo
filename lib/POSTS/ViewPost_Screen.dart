@@ -10,13 +10,13 @@ import '../STATIC CLS/Static_class.dart';
 import '../VIDEO CONTROLLERS/VideoController_network.dart';
 
 class ViewPost_Screen extends StatefulWidget {
-  String? postTitle;
-  String? postDescri;
-  String? postcreateAt;
-  String? postSource;
-  String? postMediaType;
-  String? userImage;
-  String? userName;
+ dynamic postTitle;
+ dynamic postDescri;
+ dynamic postcreateAt;
+ dynamic postSource;
+ dynamic postMediaType;
+ dynamic userImage;
+ dynamic userName;
 
   ViewPost_Screen(this.postTitle, this.postDescri, this.postcreateAt,
       this.postSource, this.postMediaType, this.userImage, this.userName,
@@ -27,13 +27,13 @@ class ViewPost_Screen extends StatefulWidget {
 }
 
 class _ViewPost_ScreenState extends State<ViewPost_Screen> {
-  String? postTitle;
-  String? postDescri;
-  String? postcreateAt;
-  String? postSource;
-  String? postMediaType;
-  String? userImage;
-  String? userName;
+  dynamic postTitle;
+  dynamic postDescri;
+  dynamic postcreateAt;
+  dynamic postSource;
+  dynamic postMediaType;
+  dynamic userImage;
+  dynamic userName;
 
   @override
   void initState() {
@@ -51,9 +51,6 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
         backgroundColor: Utils.scaffoldColor,
         body: ScrollConfiguration(
@@ -70,7 +67,7 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                        padding: EdgeInsets.only(top: 15, bottom: 30),
                        decoration: BoxDecoration(
                            color: Colors.blueAccent, borderRadius: BorderRadius.vertical(
-                               bottom: Radius.circular(35)),
+                           bottom: Radius.circular(35)),
                            gradient: LinearGradient(colors: [
                              Colors.blueAccent,Colors.blueAccent.shade100,Colors.lightBlue
                            ])
@@ -85,10 +82,9 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                            ),
                            child: CircleAvatar(
                              radius:47,backgroundColor: Colors.grey.shade200,
-                             child: userImage!.isEmpty || userImage == '' || userImage == 'null'
+                             child: userImage == '' || userImage == 'null'
                                  ? Text(userName.toString().substring(0, 1).toUpperCase(),
-                                      style: GoogleFonts.pacifico(
-                                      color: Colors.blueAccent.shade700,
+                                      style: GoogleFonts.pacifico(color: Colors.blueAccent.shade700,
                                       fontWeight: FontWeight.w500,fontSize: 18),
                                   )
                                  : ClipRRect(
@@ -98,20 +94,16 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                                       height: Get.height / 4, width: Get.width,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(
-                                              color: Colors.blueAccent, strokeWidth: 2)),
-                                      errorWidget: (context, url, error) => Icon(
-                                        Icons.image_search,
-                                        color: Colors.red,
+                                          child: CircularProgressIndicator(color: Colors.blueAccent, strokeWidth: 2)
                                       ),
+                                      errorWidget: (context, url, error) => Icon(Icons.image_search, color: Colors.red,),
                                     ),
                                ),
                            ),
                          ),
 
                          /// USER NAME ....................................
-                         Padding(
-                           padding: const EdgeInsets.all(8.0),
+                         Padding( padding: const EdgeInsets.all(8.0),
                            child: Text(userName.toString().toUpperCase(),
                                  style: GoogleFonts.poppins(color:Colors.white,
                                  fontSize: 16, fontWeight: FontWeight.w500),
@@ -144,38 +136,27 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                                      child: Icon(Icons.thumb_up,color: Colors.blue, size: 16)
                                  ),
 
-                                 Text('Likes', style: GoogleFonts.robotoCondensed(fontSize: 11.5),
-                                 )
+                                 Text('Likes', style: GoogleFonts.robotoCondensed(fontSize: 11.5))
                                ],
                              ),
                              Column(
                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                children: [
                                  CircleAvatar(
-                                     radius: 15,
-                                     backgroundColor: Colors.orange.shade50,
-                                     child: Icon(Bootstrap.messenger,
-                                         color: Colors.orange, size: 15)),
-                                 Text(
-                                   'Comments',
-                                   style: GoogleFonts.robotoCondensed(
-                                       fontSize: 11.5),
-                                 )
+                                     radius: 15,backgroundColor: Colors.orange.shade50,
+                                     child: Icon(Bootstrap.messenger,color: Colors.orange, size: 15)
+                                 ),
+                                 Text('Comments', style: GoogleFonts.robotoCondensed(fontSize: 11.5))
                                ],
                              ),
                              Column(
                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                children: [
                                  CircleAvatar(
-                                     radius: 15,
-                                     backgroundColor: Colors.brown.shade50,
-                                     child: Icon(FontAwesome.share,
-                                         color: Colors.brown, size: 15)),
-                                 Text(
-                                   'Share',
-                                   style: GoogleFonts.robotoCondensed(
-                                       fontSize: 11.5),
-                                 )
+                                     radius: 15,backgroundColor: Colors.brown.shade50,
+                                     child: Icon(FontAwesome.share,color: Colors.brown, size: 15)
+                                 ),
+                                 Text('Share', style: GoogleFonts.robotoCondensed(fontSize: 11.5),)
                                ],
                              ),
                              Column(
@@ -206,7 +187,7 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                            Container(
                              alignment: Alignment.centerLeft,
                              margin: EdgeInsets.only(top: 50, bottom: 7, left: 10, right: 10),
-                             child: Text('${postTitle?.capitalize}',
+                             child: Text('$postTitle',
                                  style:GoogleFonts.poppins(color:Colors.lightBlue,fontWeight: FontWeight.w500)
                              ),
                            ),
@@ -229,19 +210,14 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                                )),
 
                            /// Post Images Or Videos Section .............................
-                           postMediaType == 'image'
-                               ? Container(
-                               height: Get.height / 4,
-                               width: Get.width,
+                           postMediaType == 'image' ?
+                           Container(
+                               height: Get.height / 4, width: Get.width,
                                margin: EdgeInsets.all(9),
                                decoration: BoxDecoration(
-                                   color: Colors.grey.shade200,
-                                   borderRadius: BorderRadius.circular(7),
+                                   color: Colors.grey.shade200,borderRadius: BorderRadius.circular(7),
                                    boxShadow: const [
-                                     BoxShadow(
-                                         color: Colors.black26,
-                                         blurRadius: 7,
-                                         spreadRadius: -4)
+                                     BoxShadow(color: Colors.black26, blurRadius: 7,spreadRadius: -4)
                                    ]),
                                child: Stack(
                                  children: [
@@ -249,39 +225,29 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                                      borderRadius: BorderRadius.circular(7),
                                      child: CachedNetworkImage(
                                        imageUrl: Urls.mainurl + postSource!,
-                                       height: Get.height / 4,
-                                       width: Get.width,
-                                       fit: BoxFit.cover,
+                                       height: Get.height / 4, width: Get.width, fit: BoxFit.cover,
                                        placeholder: (context, url) => Center(
-                                           child: CircularProgressIndicator(
-                                               color: Colors.blueAccent,
-                                               strokeWidth: 2)),
-                                       errorWidget: (context, url, error) =>
-                                           Icon(Icons.image_search, color: Colors.red),
+                                           child: CircularProgressIndicator(color: Colors.blueAccent,strokeWidth: 2)),
+                                       errorWidget: (context, url, error) => Icon(Icons.image_search, color: Colors.red),
                                      ),
                                    ),
                                    Positioned(
-                                       left: 5,
-                                       top: 5,
+                                       left: 5, top: 5,
                                        child: Shimmer.fromColors(
-                                           baseColor: Colors.white,
-                                           highlightColor: Colors.black26,
-                                           period: Duration(seconds: 10),
-                                           child: Icon(HeroIcons.photo, size: 20)))
+                                           baseColor: Colors.white,highlightColor: Colors.black26,
+                                           period: Duration(seconds: 10), child: Icon(HeroIcons.photo, size: 20)
+                                       )
+                                   )
                                  ],
                                ))
-                               : postMediaType == 'video'
-                               ? Container(
+                               : postMediaType == 'video' ?
+                             Container(
                                width: Get.width,
                                margin: EdgeInsets.all(9),
                                decoration: BoxDecoration(
-                                   color: Colors.grey.shade200,
-                                   borderRadius: BorderRadius.circular(7),
+                                   color: Colors.grey.shade200,borderRadius: BorderRadius.circular(7),
                                    boxShadow: const [
-                                     BoxShadow(
-                                         color: Colors.black26,
-                                         blurRadius: 7,
-                                         spreadRadius: -4)
+                                     BoxShadow(color: Colors.black26, blurRadius: 7, spreadRadius: -4)
                                    ]),
                                child: Stack(
                                  children: [
@@ -289,19 +255,16 @@ class _ViewPost_ScreenState extends State<ViewPost_Screen> {
                                        borderRadius: BorderRadius.circular(7),
                                        child: VideoPlayNetwork(pathh: postSource)),
                                    Positioned(
-                                       left: 5,
-                                       top: 5,
+                                       left: 5, top: 5,
                                        child: Shimmer.fromColors(
-                                           baseColor: Colors.white,
-                                           highlightColor: Colors.black26,
+                                           baseColor: Colors.white,highlightColor: Colors.black26,
                                            period: Duration(seconds: 5),
-                                           child: Icon(HeroIcons.video_camera,
-                                               size: 20)))
+                                           child: Icon(HeroIcons.video_camera, size: 20)
+                                       )
+                                   )
                                  ],
                                ))
-                               : postMediaType == 'text'
-                               ? Container()
-                               : SizedBox(),
+                               : postMediaType == 'text' ? Container() : SizedBox(),
 
                            /// Description Section .....................
                            Container(

@@ -31,9 +31,9 @@ class AddPostController extends GetxController{
         'User_id' : Userdata.UserId.toString(),
         'P_title' : atitleController.value.text,
         'P_desc'  : adescriptionController.value.text,
-        'Source'  : Var.AddPost_ImgFile != null ?
+        'Source'  : Var.AddPost_ImgFile!.path.isNotEmpty ?
                     await dio.MultipartFile.fromFile(Var.AddPost_ImgFile!.path,filename: 'image.jpg') :
-                    Var.AddPost_VideoFile != null ?
+                    Var.AddPost_VideoFile!.path.isNotEmpty ?
                     await dio.MultipartFile.fromFile(Var.AddPost_VideoFile!.path,filename: 'video.mp4') : null
       });
       var response = await Dio().post(Urls.baseurl + Constants.ADDPOSTS, data: formData,);

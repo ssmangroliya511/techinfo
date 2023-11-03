@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, avoid_print, use_build_context_synchronously, unrelated_type_equality_checks, sized_box_for_whitespace
+// ignore_for_file: camel_case_types, prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables, avoid_print, use_build_context_synchronously, unrelated_type_equality_checks, sized_box_for_whitespace, prefer_typing_uninitialized_variables, must_be_immutable, prefer_if_null_operators
 
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
@@ -15,39 +15,50 @@ import 'package:linkedin_clone/POSTS/AddPost_Controller.dart';
 import 'package:linkedin_clone/VIDEO%20CONTROLLERS/VideoController_file.dart';
 import 'package:lottie/lottie.dart';
 import 'package:speed_dial_fab/speed_dial_fab.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import '../STATIC CLS/Static_class.dart';
 
-class AddPost_Screen extends StatefulWidget {
-  const AddPost_Screen({Key? key}) : super(key: key);
+class UpdatePost_Screen extends StatefulWidget {
+  dynamic postID;
+  dynamic index;
+  UpdatePost_Screen(this.postID,this.index, {Key? key}) : super(key: key);
 
   @override
-  State<AddPost_Screen> createState() => _AddPost_ScreenState();
+  State<UpdatePost_Screen> createState() => _UpdatePost_ScreenState();
 }
 
-class _AddPost_ScreenState extends State<AddPost_Screen> {
+class _UpdatePost_ScreenState extends State<UpdatePost_Screen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Uint8List? imageData;
   final ImagePicker picker = ImagePicker();
+  var postId;
+  var postindex;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    getxController.updatePostController.utitleController.value.text = '';
+    getxController.updatePostController.udescriptionController.value.text = '';
+    getxController.updatePostController.isLoading.value = false;
     Var.isVideoPost = false;
     Var.isImagePost = false;
     Var.AddPost_ImgFile = File('');
     Var.AddPost_VideoFile = File('');
-
     print('In_Video : ${Var.AddPost_VideoFile}');
     print('In_Image : ${Var.AddPost_ImgFile}');
     print('isVideoPost : ${Var.isVideoPost }');
     print('isImagePost : ${Var.isImagePost }');
-  }
 
+    postindex = widget.index;
+
+    postId = widget.postID;
+    Var.previousTitle = getxController.myPostController.mypostModel.value.business!.post![postindex].pTitle;
+    Var.previousDescri = getxController.myPostController.mypostModel.value.business!.post![postindex].pDesc;
+    print('POST ID ==> $postId');
+    print('POST INDEX ==> $postindex');
+  }
 
   @override
   void dispose() {
@@ -67,26 +78,26 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
       appBar: Widget_Appbar(),
 
       floatingActionButton: SpeedDialFabWidget(
-          primaryIconCollapse: EvaIcons.close,
-          primaryIconExpand: CupertinoIcons.add,
+        primaryIconCollapse: EvaIcons.close,
+        primaryIconExpand: CupertinoIcons.add,
 
-          primaryBackgroundColor: Colors.blueAccent,
-          primaryForegroundColor: Colors.white,
-          secondaryBackgroundColor: Colors.white,
-          secondaryForegroundColor: Colors.black,
+        primaryBackgroundColor: Colors.blueAccent,
+        primaryForegroundColor: Colors.white,
+        secondaryBackgroundColor: Colors.white,
+        secondaryForegroundColor: Colors.black,
 
-          secondaryIconsList: [ CupertinoIcons.delete_solid, EvaIcons.video, Icons.image ],
-          secondaryIconsText: [ "Delete", "Add Video", "Add Image"],
-          secondaryIconsOnPress: [
-            () => floatingDelete_Onpressed(),
-            () => floatingVideo_Onpressed(),
-            () => floatingImg_Onpressed(),
-          ],
+        secondaryIconsList: [ CupertinoIcons.delete_solid, EvaIcons.video, Icons.image ],
+        secondaryIconsText: [ "Delete", "Add Video", "Add Image"],
+        secondaryIconsOnPress: [
+              () => floatingDelete_Onpressed(),
+              () => floatingVideo_Onpressed(),
+              () => floatingImg_Onpressed(),
+        ],
       ),
 
       body: ScrollConfiguration(
         behavior: ScrollBehavior(
-          androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
+            androidOverscrollIndicator: AndroidOverscrollIndicator.stretch
         ),
         child: ListView(
           padding: EdgeInsets.only(top: 10, bottom: 60, left: 10, right: 10),
@@ -97,7 +108,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 onChanged: (value) {
                   setState(() {});
                 },
-                controller:getxController.addPostController.atitleController.value,
+                controller:getxController.updatePostController.utitleController.value,
                 style: GoogleFonts.roboto(fontSize: 14),
                 maxLines: null, maxLength:50,
                 keyboardType: TextInputType.multiline,
@@ -111,10 +122,9 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                     enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
                     focusedBorder: OutlineInputBorder(borderSide: BorderSide(
                         color: Colors.black45, width: 0.5)),
-                    hintText: 'Add your title . . ',
+                    hintText:  Var.previousTitle != null ? Var.previousTitle : 'Your title or Questions . . . ',
                     hintStyle: GoogleFonts.robotoCondensed(color:Colors.black38,fontSize:14),
-                    suffixIcon: getxController.addPostController.atitleController.value.text.isNotEmpty
-                        ?
+                    suffixIcon: getxController.addPostController.atitleController.value.text.isNotEmpty ?
                     IconButton(onPressed: () {
                       setState(() {
                         getxController.addPostController.atitleController.value.text = '';
@@ -135,30 +145,25 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
             /// View Post Image .......................................
             Var.isImagePost == true ?
             Container(
-               height: Get.height/2-180,
-               width: Get.width,
-               child: ClipRRect(
-                   borderRadius: BorderRadius.circular(10),
-                   child: imageData!=null ? Image.memory(imageData!,fit: BoxFit.cover) : SizedBox(),
-               ),
-             )
-             : Var.isVideoPost == true ?
-
-            /// View Post Video .......................................
-            InkWell(
-              onTap: () {
-                print('PATHHHH : ${Var.AddPost_VideoFile!.path.toString()}');
-              },
-              child: Container(
-                  width:400,child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child:VideoPlayFile(
-                        pathh:Var.AddPost_VideoFile?.path != null ? Var.AddPost_VideoFile!.path.toString() : ''
-                    )
-                  )
+              height: Get.height/2-180,
+              width: Get.width,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: imageData!=null ? Image.memory(imageData!,fit: BoxFit.cover) : SizedBox(),
               ),
             )
-            : SizedBox()
+                : Var.isVideoPost == true ?
+
+            /// View Post Video .......................................
+            Container(
+                width:400,child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child:VideoPlayFile(
+                    pathh:Var.AddPost_VideoFile?.path != null ? Var.AddPost_VideoFile!.path.toString() : ''
+                )
+            )
+            )
+                : SizedBox()
           ],
         ),
       ),
@@ -177,29 +182,32 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
         children: [
           InkWell(
             onTap: () {
-              getxController.addPostController.isLoading.value = false;
+              getxController.updatePostController.isLoading.value = false;
             },
-            child: Text('Share a New Post', style: GoogleFonts.ptSansCaption(
+            child: Text('Edit This Post ....', style: GoogleFonts.ptSansCaption(
                 color: Colors.black, fontSize: 15)),
           )
         ],
       ),
       actions: [
         Obx((){
-          return !getxController.addPostController.isLoading.value ?
+          return !getxController.updatePostController.isLoading.value ?
           Container(
-              padding: EdgeInsets.only(top:11,bottom:11,right:13),
-              child: GFButton(
-                  color: Colors.blueGrey.shade50.withOpacity(0.9),
-                  shape: GFButtonShape.pills,
-                  text: 'Add Post',textStyle: GoogleFonts.poppins(
-                            color: Colors.blueAccent,fontSize:12,fontWeight:FontWeight.w500
-                         ),
-                  icon: Icon(Bootstrap.send_check_fill,color:Colors.blueAccent,size:13),
-                  onPressed: () {
-                    getxController.addPostController.FetchAddPost_ApiData();
-                  }
-              ),
+            padding: EdgeInsets.only(top: 11, bottom: 11, right: 13),
+            child: GFButton(
+                color: Colors.blueGrey.shade50.withOpacity(0.9),
+                shape: GFButtonShape.pills,
+                text: 'Update Post',textStyle: GoogleFonts.poppins(
+                    color: Colors.green,fontSize:12,fontWeight: FontWeight.w500
+                ),
+                icon: Icon(Icons.update,color:Colors.green, size:19),
+                onPressed: () {
+                  Var.postId  = postId;
+                  getxController.updatePostController.FetchUpdatePost_ApiData();
+                  getxController.myPostController.FetchMyPost_ApiData();
+                  getxController.homeController.FetchAllPost_ApiData();
+                }
+            ),
           ) : Lottie.asset('assets/mylottie/Dot Loading Animation.json',
               height:Get.height/3+10,width:Get.width/4);
         })
@@ -213,7 +221,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
         setState(() {});
       },
       style: GoogleFonts.roboto(fontSize: 15),
-      controller: getxController.addPostController.adescriptionController.value,
+      controller: getxController.updatePostController.udescriptionController.value,
       maxLines: null,maxLength:null,
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
@@ -223,7 +231,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
           border: OutlineInputBorder(borderSide: BorderSide.none),
           enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
           focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-          hintText: 'What do you want to talk about? . .',
+          hintText: Var.previousDescri != null ? Var.previousDescri : 'What you want to describe . . . ',
           hintStyle: GoogleFonts.ptSans(color: Colors.black38, fontSize: 16),
           suffixIcon: getxController.addPostController.adescriptionController.value.text.isNotEmpty ?
           IconButton(onPressed: () {
@@ -236,21 +244,21 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
   }
 
   floatingDelete_Onpressed() async {
-      setState(() {
-        Var.isVideoPost = false;
-        Var.isImagePost = false;
-        Var.AddPost_ImgFile = File('');
-        Var.AddPost_VideoFile = File('');
-        print('DE-Video : ${Var.AddPost_VideoFile}');
-        print('DE-Image : ${Var.AddPost_ImgFile}');
-        print('isVideoPost : ${Var.isVideoPost }');
-        print('isImagePost : ${Var.isImagePost }');
-      });
-      Fluttertoast.showToast(
-          msg: 'Delete Successful !',textColor:Colors.green,
-          gravity: ToastGravity.CENTER
-      );
-   }
+    setState(() {
+      Var.isVideoPost = false;
+      Var.isImagePost = false;
+      Var.AddPost_ImgFile = File('');
+      Var.AddPost_VideoFile = File('');
+      print('DE-Video : ${Var.AddPost_VideoFile}');
+      print('DE-Image : ${Var.AddPost_ImgFile}');
+      print('isVideoPost : ${Var.isVideoPost }');
+      print('isImagePost : ${Var.isImagePost }');
+    });
+    Fluttertoast.showToast(
+        msg: 'Delete Successful !',textColor:Colors.green,
+        gravity: ToastGravity.CENTER
+    );
+  }
 
 
   floatingImg_Onpressed() async {
@@ -282,26 +290,25 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
   }
 
   floatingVideo_Onpressed() async {
-      setState(() {
-        Var.isImagePost = false;
-        Var.AddPost_ImgFile = File('');
-        Var.AddPost_VideoFile = File('');
-        imageData = null;
-        print('V_Video : ${Var.AddPost_VideoFile}');
-        print('V_Image : ${Var.AddPost_ImgFile}');
-        print('isVideoPost : ${Var.isVideoPost }');
-        print('isImagePost : ${Var.isImagePost }');
-      });
+    setState(() {
+      Var.isImagePost = false;
+      Var.AddPost_ImgFile = File('');
+      imageData = null;
+      print('V_Video : ${Var.AddPost_VideoFile}');
+      print('V_Image : ${Var.AddPost_ImgFile}');
+      print('isVideoPost : ${Var.isVideoPost }');
+      print('isImagePost : ${Var.isImagePost }');
+    });
 
-      final pickedvideoFile = await picker.pickVideo(source: ImageSource.gallery,
+    final pickedvideoFile = await picker.pickVideo(source: ImageSource.gallery,
         preferredCameraDevice: CameraDevice.front, maxDuration: Duration(seconds: 60));
-        setState(() {
-          Var.isVideoPost = true;
-          Var.AddPost_VideoFile = File('');
-          Var.AddPost_VideoFile = File(pickedvideoFile!.path);
-        });
-        print('Add Video ==> ${Var.AddPost_VideoFile}');
-    }
-
-
+    setState(() {
+      Var.isVideoPost = true;
+      Var.AddPost_VideoFile = File('');
+      Var.AddPost_VideoFile = File(pickedvideoFile!.path);
+    });
+    print('Add Video ==> ${Var.AddPost_VideoFile}');
   }
+
+
+}

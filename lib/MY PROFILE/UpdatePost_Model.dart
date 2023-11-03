@@ -26,7 +26,7 @@ class Data {
   String? postTitle;
   String? postDescription;
   String? mediaType;
-  Null? source;
+  dynamic source;
 
   Data({this.postTitle, this.postDescription, this.mediaType, this.source});
 

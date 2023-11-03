@@ -172,7 +172,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                         ),
                         /// VIEW POST BUTTON ....................................
                         trailing: SizedBox(
-                          height:27,width:Get.width/3-32,
+                          height:27,width:Get.width/3-27,
                           child: GFButton(
                             elevation: 0,highlightElevation:0,
                               splashColor: Colors.blueAccent.shade100,

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-
 import '../DRAWER CLS/Drawerr_cls.dart';
-import 'BottomHome_Screen.dart';
+import '../SCREENS/BottomHome_Screen.dart';
 
 class Notification_Screen extends StatefulWidget {
   const Notification_Screen({Key? key}) : super(key: key);
@@ -65,7 +64,7 @@ class _Notification_ScreenState extends State<Notification_Screen> {
   Widget_Appbar(){
     return  AppBar(
       toolbarHeight:55,
-      backgroundColor:Colors.white,elevation: 0.5, centerTitle:true,
+      backgroundColor:Colors.white,elevation:0, centerTitle:true,
       iconTheme: IconThemeData(color:Colors.blueAccent),
       actionsIconTheme:IconThemeData(color:Colors.blueAccent),
       title: Text("Notifications", style: GoogleFonts.ptSansCaption(

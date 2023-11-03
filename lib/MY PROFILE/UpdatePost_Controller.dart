@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:linkedin_clone/SCREENS/BottomHome_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 import 'UpdatePost_Model.dart';
 
@@ -14,24 +14,44 @@ class UpdatePostController extends GetxController{
   var updatepostModel = UpdatePost_Model().obs;
   RxBool isLoading = false.obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+  }
+
+  final utitleController        = TextEditingController(text: Var.previousTitle.toString()).obs;
+  final udescriptionController  = TextEditingController(text: Var.previousDescri.toString()).obs;
 
   FetchUpdatePost_ApiData() async {
+
+    print('User_id   : ${Userdata.UserId.toString()}');
+    print('Postid    : ${Var.postId}');
+    print('UP_title  : ${utitleController.value.text}');
+    print('UP_desc   : ${udescriptionController.value.text}');
+    print('UPostImg  : ${Var.AddPost_ImgFile!.path}');
+    print('UPostVid  : ${Var.AddPost_VideoFile!.path}');
 
     isLoading.value = true;
 
     try {
-      var response = await Var.dio.post(Urls.baseurl + Constants.MYPOSTS,
-          data: {
-            'User_id' : Userdata.UserId.toString(),
-            'Postid'  : Var.postId,
-            'P_title' : Var.postTitle,
-            'P_desc'  : Var.postDescription,
-            'Source'  : Var.postSourse
-          });
+      dio.FormData formData = dio.FormData.fromMap({
+
+        'User_id' : Userdata.UserId.toString(),
+        'Postid'  : Var.postId,
+        'P_title' : utitleController.value.text,
+        'P_desc'  : udescriptionController.value.text,
+        'Source'  : Var.AddPost_ImgFile!.path.isNotEmpty ?
+                    await dio.MultipartFile.fromFile(Var.AddPost_ImgFile!.path,filename: 'image.jpg') :
+                    Var.AddPost_VideoFile!.path.isNotEmpty ?
+                    await dio.MultipartFile.fromFile(Var.AddPost_VideoFile!.path,filename: 'video.mp4') : null
+      });
+      var response = await Dio().post(Urls.baseurl + Constants.UPDATEPOST, data: formData,);
+
       updatepostModel.value = UpdatePost_Model.fromJson(response.data);
 
       if (response.statusCode == 200 && updatepostModel.value.code == 200) {
-        isLoading.value = false;
 
         getDialogs(
             'Success','Post Updated Successfully',
@@ -41,11 +61,20 @@ class UpdatePostController extends GetxController{
 
         print('UpdatePost Api Data : ${response.data.toString()}');
         print('UpdatePost Api Response : ${updatepostModel.value.code.toString()}');
+
+        Get.off(const BottomHome_Screen());
+        isLoading.value = false;
       }
       else{
         isLoading.value = false;
         print('Error : ${updatepostModel.value.message}');
         print('Error : ${updatepostModel.value.code}');
+
+        getDialogs(
+            'Error','Something wrong !',
+             Colors.white,Colors.red,Icons.error,
+             Colors.white,const Duration(seconds:3)
+        );
       }
     }
     on DioException catch (e){

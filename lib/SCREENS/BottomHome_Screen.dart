@@ -6,9 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:linkedin_clone/MY%20PROFILE/MyProfile_Screen.dart';
 import 'package:linkedin_clone/MY%20PROFILE/YourPost_Screen.dart';
+import '../NOTIFICATIONS/Notification_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 import '../HOME/Home_Screen.dart';
-import 'Notification_Screen.dart';
 
 class BottomHome_Screen extends StatefulWidget {
   const BottomHome_Screen( {Key? key}) : super(key: key);

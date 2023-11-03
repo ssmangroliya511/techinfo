@@ -11,10 +11,11 @@ import 'package:linkedin_clone/MY%20PROFILE/MyPosts_Controller.dart';
 import 'package:linkedin_clone/POSTS/AddPost_Screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
+import '../POSTS/ViewPost_Screen.dart';
 import '../STATIC CLS/Static_class.dart';
 import '../VIDEO CONTROLLERS/VideoController_network.dart';
-import 'DeletePost_Controller.dart';
 import 'MyProfile_Screen.dart';
+import 'UpdatePost_Screen.dart';
 
 class YourPost_Screen extends StatefulWidget {
   const YourPost_Screen({Key? key}) : super(key: key);
@@ -55,25 +56,33 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
             shrinkWrap: true,
             itemCount: getxController.myPostController.mypostModel.value.business!.post!.length,
             itemBuilder: (context, index) {
-
-              var postId           = getxController.myPostController.mypostModel.value.business!.post![index].postId.toString();
-              var createdate       = getxController.myPostController.mypostModel.value.business!.post![index].createdAt.toString();
-              var postStatus       = getxController.myPostController.mypostModel.value.business!.post![index].status.toString();
-              var postTitle        = getxController.myPostController.mypostModel.value.business!.post![index].pTitle.toString();
-              var postDescription  = getxController.myPostController.mypostModel.value.business!.post![index].pDesc.toString();
-              var postSource       = getxController.myPostController.mypostModel.value.business!.post![index].source.toString();
-              var postMediaType    = getxController.myPostController.mypostModel.value.business!.post![index].mediaType.toString();
+              dynamic INDEX         = index;
+              dynamic postId        = getxController.myPostController.mypostModel.value.business!.post![index].postId.toString();
+              dynamic postTitle     = getxController.myPostController.mypostModel.value.business!.post![index].pTitle.toString();
+              dynamic postDescri    = getxController.myPostController.mypostModel.value.business!.post![index].pDesc.toString();
+              dynamic postcreateAt  = getxController.myPostController.mypostModel.value.business!.post![index].createdAt.toString();
+              dynamic postSource    = getxController.myPostController.mypostModel.value.business!.post![index].source.toString();
+              dynamic postMediaType = getxController.myPostController.mypostModel.value.business!.post![index].mediaType.toString();
+              dynamic postStatus    = getxController.myPostController.mypostModel.value.business!.post![index].status.toString();
+              dynamic userImage     = Userdata.UserImage;
+              dynamic userName      = Userdata.UserName;
 
               return Container(
-                margin:EdgeInsets.only(top:5,bottom:7),
-                padding: EdgeInsets.only(top:5,bottom:10,left:7,right:7),
-                width:Get.width,color:Colors.white,
+                width:Get.width,
+                margin:EdgeInsets.only(bottom:10,left:2,right:2),
+                padding: EdgeInsets.only(bottom:10,left:7,right:7),
+                decoration:BoxDecoration(
+                    color: Colors.white,borderRadius: BorderRadius.circular(10),
+                    boxShadow: [BoxShadow(color:Colors.black26,blurRadius:5,spreadRadius:-5)]
+                ),
+
                 child:Column(
                   children: [
 
                     /// Profile Pic/Name Section .....................
                     ListTile(
-                        dense: true,contentPadding: EdgeInsets.only(left:5,right:5),
+                        contentPadding: EdgeInsets.only(left:1,right:5),
+                        dense: true,
                         leading:CircleAvatar(
                           radius:20,backgroundColor:Colors.grey.shade200,
                           child:
@@ -95,13 +104,13 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
                           ),
                         ),
                         title:RichText(
-                          text:TextSpan(text:'You (${Userdata.UserName})\t ',
+                          text:TextSpan(text:'You \t ',
                               style:GoogleFonts.poppins(color:Colors.black,
                                   fontWeight:FontWeight.w500,fontSize:12.5),
 
                               children: [
                                 TextSpan(
-                                    text:createdate.toString().substring(0,10),
+                                    text:postcreateAt.toString().substring(0,10),
                                     style:GoogleFonts.ptSerif(color:Colors.blueGrey,fontSize:11)
                                 )
                               ]
@@ -109,11 +118,12 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
                         ),
 
                         subtitle: RichText(
-                          text: TextSpan(text:createdate.toString().substring(11,16),
-                              style:GoogleFonts.roboto(color:Colors.black54,fontSize:10),
+                          text: TextSpan(text:postcreateAt.toString().substring(11,16),
+                              style:GoogleFonts.roboto(color:Colors.black45,fontSize:10),
+
                               children: [
                                 TextSpan(text:'\t o\'clock ago',style:GoogleFonts.roboto(
-                                    color:Colors.black54,fontSize:10)
+                                    color:Colors.black45,fontSize:10)
                                 )
                               ]
                           ),
@@ -122,46 +132,41 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+
                             PostStatus_Button(postStatus,postId),
 
                             /// UPDATE POST BUTTON.......................
                             Padding(
                                 padding:EdgeInsets.only(right:7),
-                                child: Obx((){
-                                  return !getxController.updatePostController.isLoading.value ?
-                                  GestureDetector(
-                                    onTap: () {
-                                      Var.postId = getxController.myPostController.mypostModel.value.business!.post![index].postId;
-                                      Var.postTitle = getxController.myPostController.mypostModel.value.business!.post![index].pTitle;
-                                      Var.postDescription = getxController.myPostController.mypostModel.value.business!.post![index].pDesc;
-                                      Var.postSourse = getxController.myPostController.mypostModel.value.business!.post![index].source;
-
-                                      getxController.updatePostController.FetchUpdatePost_ApiData();
-                                    },
-                                    child: CircleAvatar(
-                                        radius:13,backgroundColor:Colors.orange,
-                                        child: Icon(Iconsax.edit,size:15,color:Colors.white)
-                                    ),
-                                  ) : Lottie.asset('assets/mylottie/Dot Loading Animation.json');
-                                })
+                                child:  GestureDetector(
+                                  onTap: () {
+                                    dynamic postID = postId;
+                                    dynamic index = INDEX;
+                                    Get.to(UpdatePost_Screen(postID,index));
+                                    // getxController.updatePostController.isLoading.value = false;
+                                  },
+                                  child: CircleAvatar(
+                                      radius:13,backgroundColor:Colors.orange,
+                                      child: Icon(Iconsax.edit,size:15,color:Colors.white)
+                                  ),
+                                )
                             ),
-
 
                             /// DELETE POST BUTTON............
                             Obx((){
-                              return GestureDetector(
+                              return !getxController.deletePostController.isLoading.value ?
+                              GestureDetector(
                                   onTap: () {
-                                    Var.postId = postId;
+                                    Var.postId = getxController.myPostController.mypostModel.value.business!.post![index].postId.toString();
                                     getxController.deletePostController.FetchDeletePost_ApiData();
                                     getxController.myPostController.FetchMyPost_ApiData();
                                     getxController.homeController.FetchAllPost_ApiData();
                                   },
-                                  child: !DeletePostController().isLoading.value ?
-                                  CircleAvatar(
+                                  child: CircleAvatar(
                                       radius:13,backgroundColor:Colors.red,
                                       child: Icon(CupertinoIcons.delete,size:15,color:Colors.white)
-                                  ) : Lottie.asset('assets/mylottie/Dot Loading Animation.json')
-                              );
+                                  )
+                              ) : Lottie.asset('assets/mylottie/Dot Loading Animation.json');
                             })
                           ],
                         )
@@ -172,7 +177,7 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
                     Container(
                       alignment: Alignment.centerLeft,
                       margin:EdgeInsets.only(left:2,right:5,top:5,bottom:10),
-                      child:Text('${postTitle.capitalize}', style:Utils.posttitleStyle),
+                      child:Text('$postTitle', style:Utils.posttitleStyle),
                     ),
 
                     /// Post Images Or Videos Section .............................
@@ -236,11 +241,35 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
                     )
                         : postMediaType == 'text' ? Container() : SizedBox(),
 
-                    /// Description Section .....................
+                    /// Description Section .....................................
                     Container(
-                      alignment: Alignment.centerLeft,
-                      margin:EdgeInsets.only(left:2,right:5,top:10,bottom:10),
-                      child: Text('${postDescription.capitalize}',style:GoogleFonts.poppins(fontSize:12.5),),
+                        alignment: Alignment.centerLeft,
+                        margin:EdgeInsets.only(top:10,left:5,right:5),
+                        child: Column(
+                          children: [
+                            Text(postDescri,style:Utils.postDescripStyle,maxLines:5),
+
+                            postDescri.isEmpty ? SizedBox() :
+                            Align(
+                                alignment:Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      Var.postId = postId;
+                                    });
+                                    Get.to(
+                                        ViewPost_Screen(
+                                            postTitle, postDescri, postcreateAt,postSource,
+                                            postMediaType,userImage,userName)
+                                    );
+                                  },
+                                  child: Text('.... Read More', style:GoogleFonts.ptSerif(
+                                      fontWeight: FontWeight.w600,fontSize:13),maxLines:5
+                                  ),
+                                )
+                            ),
+                          ],
+                        )
                     ),
 
                     Divider(),
@@ -276,7 +305,7 @@ class _YourPost_ScreenState extends State<YourPost_Screen> {
   Widget_Appbar(){
     return AppBar(
       toolbarHeight:55,
-      backgroundColor:Colors.white,elevation:0.5, centerTitle:true,
+      backgroundColor:Colors.white,elevation:0, centerTitle:true,
       iconTheme: IconThemeData(color:Colors.blueAccent),
       actionsIconTheme:IconThemeData(color:Colors.blueAccent),
       leading:IconButton(

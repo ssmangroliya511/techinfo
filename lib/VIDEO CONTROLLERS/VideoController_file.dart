@@ -44,6 +44,7 @@ class _VideoPlayFileState extends State<VideoPlayFile> {
 
   Future initializePlayer() async {
     videocontroller2 = VideoPlayerController.file(File(widget.pathh.toString()));
+    setState(() {});
 
     await Future.wait([videocontroller2!.initialize()]);
 
@@ -77,9 +78,8 @@ class _VideoPlayFileState extends State<VideoPlayFile> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.black,
-        child: chewieController2 != null &&
-            chewieController2!.videoPlayerController.value.isInitialized &&
-            videocontroller2!= null ?
+        child: chewieController2 != null && videocontroller2!= null &&
+               chewieController2!.videoPlayerController.value.isInitialized ?
         AspectRatio(
             aspectRatio:chewieController2!.videoPlayerController.value.aspectRatio,
             child: Chewie(controller: chewieController2!)

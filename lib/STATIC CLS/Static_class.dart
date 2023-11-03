@@ -22,6 +22,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../AUTH/LOGIN SCREEN/Login_Screen.dart';
 import '../MY PROFILE/UpdatePost_Controller.dart';
+import '../NOTIFICATIONS/Notification_Controller.dart';
 import '../POSTS/AddPost_Controller.dart';
 
 
@@ -37,6 +38,7 @@ class Constants{
     static const UPDATEPROF  =    'update_profile';
     static const ADDPOSTS    =    'add_post';
     static const ALLPOSTS    =    'all_post';
+    static const UPDATEPOST  =    'updatePost';
     static const DELETEPOST  =    'deletePost';
 }
 
@@ -46,6 +48,8 @@ class Var {
   static var selectedIndex = 0;
   static bool isloading = false;
   static bool isGuestUser = false;
+  static bool isImagePost = false;
+  static bool isVideoPost = false;
   static final dio = Dio();
   static final ImagePicker imagePicker = ImagePicker();
   static File? Updateimg_file;
@@ -53,12 +57,15 @@ class Var {
   static File? AddPost_VideoFile;
   static var AddPostImage;
   static var AddPostVideo;
-  static var editedImage;
+  // static var editedImage;
   static var permissionGranted;
   static var postId;
   static var postDescription;
   static var postTitle;
   static var postSourse;
+
+  static var previousTitle;
+  static var previousDescri;
 }
 
 class getxController{
@@ -72,6 +79,7 @@ class getxController{
   static var myPostController         = Get.put(MyPostController());
   static var deleteUserController     = Get.put(DeleteUserController());
   static var updatePostController     = Get.put(UpdatePostController());
+  static var notificationController   = Get.put(NotificationController());
 }
 
 class Userdata{
